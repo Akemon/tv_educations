@@ -1,0 +1,12 @@
+server:
+  port: 8888
+spring:
+  mvc:
+    view:
+      suffix: .html
+  thymeleaf:
+    mode: HTML5
+    encoding: utf-8
+    content-type: text/html
+    cache: false
+
