@@ -60,4 +60,13 @@ public class Student {
     public void setStudentphone(String studentphone) {
         this.studentphone = studentphone == null ? null : studentphone.trim();
     }
+
+    public Student(Integer studentid, String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone) {
+        this.studentid = studentid;
+        this.studentnunber = studentnunber;
+        this.studentname = studentname;
+        this.studentgrade = studentgrade;
+        this.schoolid = schoolid;
+        this.studentphone = studentphone;
+    }
 }

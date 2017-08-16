@@ -50,4 +50,12 @@ public class Teacher {
     public void setTeacherphone(String teacherphone) {
         this.teacherphone = teacherphone == null ? null : teacherphone.trim();
     }
+
+    public Teacher(Integer teacherid, String teachernumber, String teachername, Integer schoolid, String teacherphone) {
+        this.teacherid = teacherid;
+        this.teachernumber = teachernumber;
+        this.teachername = teachername;
+        this.schoolid = schoolid;
+        this.teacherphone = teacherphone;
+    }
 }
