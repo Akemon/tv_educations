@@ -10,7 +10,6 @@ public class poetryDao {
     Connection connection =new DBConn().getConnect();
     //插入古诗
     public boolean insertPoem(Poetry poe){
-
         try {
             PreparedStatement preparedStatement =connection.prepareStatement("INSERT  into tv_poetry(title,poet,poem) VALUES (?,?,?)");
             preparedStatement.setString(1,poe.getTitle());
@@ -50,14 +49,44 @@ public class poetryDao {
     }
 
     //获取一首古诗
-    public Poetry getOnePoem(){
-            return null;
+    public Poetry getOnePoem(int poetryID){
+        Poetry poe =null;
+        try {
+            Statement statement =connection.createStatement();
+            ResultSet rs =statement.executeQuery("SELECT * from tv_poetry where poetryID="+poetryID);
+            if(rs.next()){
+                int poeID =rs.getInt(1);
+                String title =rs.getString(2);
+                String poet =rs.getString(3);
+                String poem =rs.getString(4);
+                poe =new Poetry(poeID,title,poet,poem);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return poe;
     }
 
 
     //搜索古诗
-    public Poetry getPoem(String title){
-        return null;
+    public List<Poetry> getResearchPoem(String title){
+        List<Poetry> list =new ArrayList<Poetry>();
+        try {
+            Statement statement =connection.createStatement();
+            ResultSet rs =statement.executeQuery("SELECT  * from tv_poetry WHERE title like '%"+title+"%' LIMIT 5");
+            while(rs.next()){
+                int poeID =rs.getInt(1);
+                String titleNew =rs.getString(2);
+                String poet =rs.getString(3);
+                String poem =rs.getString(4);
+                Poetry poe =new Poetry(poeID,titleNew,poet,poem);
+                list.add(poe);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+
     }
 
 

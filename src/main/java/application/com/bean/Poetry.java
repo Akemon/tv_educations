@@ -7,6 +7,16 @@ public class Poetry {
 
     private String poet;
 
+    public Poetry(Integer poetryid, String title, String poet, String poem) {
+        this.poetryid = poetryid;
+        this.title = title;
+        this.poet = poet;
+        this.poem = poem;
+    }
+
+    public Poetry() {
+    }
+
     private String poem;
 
     public Integer getPoetryid() {

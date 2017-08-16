@@ -16,6 +16,7 @@ import java.util.Map;
 @Controller
 @EnableAutoConfiguration
 public class Application {
+    poetryDao poetryDao =new poetryDao();
 
 
     @RequestMapping("/index")
@@ -36,6 +37,7 @@ public class Application {
 
     //古诗词的映射
   //  #############################################################
+    //古诗的插入
     @RequestMapping("/insertPoem")
     String insertPoem(HttpServletRequest request){
         String title =request.getParameter("title");
@@ -45,7 +47,7 @@ public class Application {
         po.setPoem(poem);
         po.setTitle(title);
         po.setPoet(poet);
-        boolean flag =new poetryDao().insertPoem(po);
+        boolean flag =poetryDao.insertPoem(po);
         System.out.println("flag:"+flag);
         System.out.println("title:"+title);
         System.out.println("poet:"+poet);
@@ -53,10 +55,10 @@ public class Application {
         return "index";
 
     }
-
+    //随机获取三首古诗
     @RequestMapping("/getThreePoem")
     public String getThreePoem(Map<String,Object> map){
-        List<Poetry> poetryList = new poetryDao().getThreePoemList();
+        List<Poetry> poetryList = poetryDao.getThreePoemList();
         JSONArray jsonArray =JSONArray.fromObject(poetryList);
         JSONObject jsonObject =new JSONObject();
         jsonObject.put("poemList", jsonArray);
@@ -64,7 +66,18 @@ public class Application {
         map.put("poemList",jsonObject);
         return "index";
     }
-
+    //搜索古诗
+    @RequestMapping("/searchPoem")
+    public String searchPoem(HttpServletRequest request,Map<String,Object> map){
+        String title =request.getParameter("keyword");
+        List<Poetry> poemList =poetryDao.getResearchPoem(title);
+        JSONArray jsonArray =JSONArray.fromObject(poemList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("poemList", jsonArray);
+        System.out.println(jsonObject.toString());
+        map.put("poemList",jsonObject);
+        return "index";
+    }
 
     //  #############################################################
     public static void main(String[] args) throws Exception {
