@@ -7,11 +7,21 @@ public class Record {
 
     private Integer studentid;
 
+    public Record() {
+    }
+
+    public Record(Integer studentid, Integer poetryid, String score, String scoretime) {
+        this.studentid = studentid;
+        this.poetryid = poetryid;
+        this.score = score;
+        this.scoretime = scoretime;
+    }
+
     private Integer poetryid;
 
     private String score;
 
-    private Date scoretime;
+    private String scoretime;
 
     public Integer getRecordid() {
         return recordid;
@@ -45,11 +55,11 @@ public class Record {
         this.score = score == null ? null : score.trim();
     }
 
-    public Date getScoretime() {
+    public String getScoretime() {
         return scoretime;
     }
 
-    public void setScoretime(Date scoretime) {
+    public void setScoretime(String scoretime) {
         this.scoretime = scoretime;
     }
 }

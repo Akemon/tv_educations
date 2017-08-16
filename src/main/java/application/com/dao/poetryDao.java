@@ -1,6 +1,7 @@
 package application.com.dao;
 
 import application.com.bean.Poetry;
+import application.com.bean.Record;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -91,7 +92,18 @@ public class poetryDao {
 
 
     //记录结果
-    public boolean recordScore(){
+    public boolean recordScore(Record record){
+        try {
+            PreparedStatement preparedStatement =connection.prepareStatement("INSERT  into tv_record(studentID,poetryID,score,scoreTime) VALUES (?,?,?,?)");
+            preparedStatement.setInt(1,record.getStudentid());
+            preparedStatement.setInt(2,record.getPoetryid());
+            preparedStatement.setString(3,record.getScore());
+            preparedStatement.setString(4,record.getScoretime());
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
