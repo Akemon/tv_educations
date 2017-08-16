@@ -93,7 +93,7 @@ public class teacherDao {
         return null;
 
     }
-    //根据学校获取学生
+    //根据学校获取老师
     public List getTeacherForSchool(int schoolid){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher where schoolID=?");

@@ -60,4 +60,13 @@ public class School {
     public void setSchoolphone(String schoolphone) {
         this.schoolphone = schoolphone == null ? null : schoolphone.trim();
     }
+
+    public School(Integer schoolid, String schoolname, String schoolprovince, String schooladdress, String schooltype, String schoolphone) {
+        this.schoolid = schoolid;
+        this.schoolname = schoolname;
+        this.schoolprovince = schoolprovince;
+        this.schooladdress = schooladdress;
+        this.schooltype = schooltype;
+        this.schoolphone = schoolphone;
+    }
 }
