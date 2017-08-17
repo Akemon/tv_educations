@@ -132,10 +132,10 @@ public class studentDao {
 
    }
    //根据省份、学校获取班级
-    public List<String> getSchoolGrade(int schoolid,String schoolprovvince){
+    public List<String> getSchoolGrade(String schoolName,String schoolprovvince){
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select distinct  studentGrade from tv_student,tv_school where tv_student.schoolID=tv_school.schoolID and tv_student.schoolID=? AND schoolProvince=?");
-            preparedStatement.setInt(1,schoolid );
+            PreparedStatement preparedStatement = connection.prepareStatement("select distinct  studentGrade from tv_student,tv_school where tv_student.schoolID=tv_school.schoolID and schoolName=? AND schoolProvince=?");
+            preparedStatement.setString(1,schoolName );
             preparedStatement.setString(2,schoolprovvince );
             ResultSet rs = preparedStatement.executeQuery();
             List<String> students=new ArrayList<String>();
