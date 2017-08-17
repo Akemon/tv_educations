@@ -1,9 +1,6 @@
 package  application.com;
 import application.com.bean.*;
-import application.com.dao.poetryDao;
-import application.com.dao.schoolDao;
-import application.com.dao.studentDao;
-import application.com.dao.teacherDao;
+import application.com.dao.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.boot.SpringApplication;
@@ -29,6 +26,7 @@ public class Application {
     studentDao stuDao =new studentDao();
     teacherDao teachDao =new teacherDao();
     schoolDao schDao =new schoolDao();
+    adminDao adDao =new adminDao();
 
 
     @RequestMapping("/index")
@@ -360,6 +358,29 @@ public class Application {
         }
     }
 
+    //学生登陆
+    @RequestMapping("/studentLogin")
+    public void studentLogin(HttpServletRequest request, HttpServletResponse response){
+        String userName =request.getParameter("userName");
+        String userPass =request.getParameter("userPass");
+        Student student =stuDao.studentLogin(userName,userPass);
+        List<Student> studentList =new ArrayList<Student>();
+        studentList.add(student);
+        JSONArray jsonArray =JSONArray.fromObject(studentList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("studentList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     //  #############################################################
 
 
@@ -605,6 +626,29 @@ public class Application {
         JSONArray jsonArray =JSONArray.fromObject(schoolList);
         JSONObject jsonObject =new JSONObject();
         jsonObject.put("schoolList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //  #############################################################
+
+    //管理员的映射
+    //管理员登陆
+    @RequestMapping("/adminLogin")
+    public void adminLogin(HttpServletRequest request, HttpServletResponse response){
+        String adminName =request.getParameter("adminName");
+        String adminPass =request.getParameter("adminPass");
+        boolean flag =adDao.login(adminName,adminPass);
+        String str = "{\"flag\":\""+flag+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
         System.out.println(jsonObject.toString());
         response.setContentType("application/json; charset=utf-8");
         PrintWriter out = null;

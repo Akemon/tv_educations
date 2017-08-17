@@ -21,7 +21,7 @@ public class teacherDao {
             if (rs.next()) {
                 return false;
             }
-            PreparedStatement preparedStatement =connection.prepareStatement("INSERT  into tv_teacher(teacherNunber,teacherName,schoolID,teacherPhone) VALUES (?,?,?,?,?,?)");
+            PreparedStatement preparedStatement =connection.prepareStatement("INSERT  into tv_teacher(teacherNumber,teacherName,schoolID,teacherPhone,userName,userPass) VALUES (?,?,?,?,?,?)");
             preparedStatement.setString(1,tea.getTeachernumber());
             preparedStatement.setString(2,tea.getTeachername());
             preparedStatement.setInt(3,tea.getSchoolid());
@@ -52,7 +52,7 @@ public class teacherDao {
     //修改学生信息
     public boolean modifyTeacher(Teacher teacher){
         try{
-            PreparedStatement preparedStatement =connection.prepareStatement("update tv_teacher set teacherNunber=?, teacherName=?,schoolID=?,teacherPhone=? where teacherID= ?");
+            PreparedStatement preparedStatement =connection.prepareStatement("update tv_teacher set teacherNumber=?, teacherName=?,schoolID=?,teacherPhone=? where teacherID= ?");
             preparedStatement.setString(1,teacher.getTeachernumber());
             preparedStatement.setString(2,teacher.getTeachername());
             preparedStatement.setInt(3,teacher.getTeacherid());
