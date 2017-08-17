@@ -151,7 +151,20 @@ public class studentDao {
         return null;
     }
     //登陆
-//    public boolean studentLogin(){
-//
-//    }
+    public boolean studentLogin(String userName, String userPass){
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student where userName=? and userPass=?");
+            preparedStatement.setString(1,userName);
+            preparedStatement.setString(2,userPass);
+            ResultSet rs = preparedStatement.executeQuery();
+            System.out.print("eqq:"+rs);
+            if(rs.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return false;
+    }
 }
