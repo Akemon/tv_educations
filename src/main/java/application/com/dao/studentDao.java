@@ -109,13 +109,13 @@ public class studentDao {
        return null;
 
    }
-   //根据学校、班级获取学生
+   //根据省份、学校、班级获取学生
    public List<Student> getStudentForSchoolAndGrade(String studentGrade,String Schoolid,String schoolProvince){
        try {
-           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student where studentGrade=? and schoolID=?");
+           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student where tv_student.schoolID=tv_school.schoolID AND studentGrade=? and schoolID=? AND schoolProvince=?");
            preparedStatement.setString(1,studentGrade );
            preparedStatement.setString(2,Schoolid );
-          // preparedStatement.setString(3,schoolProvince );
+           preparedStatement.setString(3,schoolProvince );
            ResultSet rs = preparedStatement.executeQuery();
            List<Student> students=new ArrayList<Student>();
            while (rs.next()) {

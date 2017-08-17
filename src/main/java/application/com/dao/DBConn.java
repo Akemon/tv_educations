@@ -30,7 +30,7 @@ public class DBConn {
 //				System.out.println(rs.getString("title"));
 //			}
 //		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
+//			// 
 //			e.printStackTrace();
 //		}
 //
