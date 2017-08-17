@@ -24,13 +24,13 @@ public class studentDao {
             if (rs.next()) {
                 return false;
             }
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT  into tv_student(studentNunber,studentName,studentGrade,schoolID,studentPhone,) VALUES (?,?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT  into tv_student(studentNunber,studentName,studentGrade,schoolID,studentPhone,userName,userPass) VALUES (?,?,?,?,?,?,?)");
             preparedStatement.setString(1, stu.getStudentnunber());
             preparedStatement.setString(2, stu.getStudentname());
             preparedStatement.setString(3, stu.getStudentgrade());
             preparedStatement.setInt(4, stu.getSchoolid());
             preparedStatement.setString(5, stu.getStudentphone());
-            preparedStatement.setString(6, stu.getUserPass());
+            preparedStatement.setString(6, stu.getUserName());
             preparedStatement.setString(7, stu.getUserPass());
             preparedStatement.executeUpdate();
             return true;
@@ -189,6 +189,18 @@ public class studentDao {
     //学生注册
     public boolean studentRegister(Student student) {
                  return insertStudent(student);
+    }
+
+    public static void main(String[] args){
+        studentDao sd=new studentDao();
+        System.out.print(sd.searchStudent("冯").get(0).getStudentname());
+
+        Student s1=new Student( 2,"11245533",  "柳蛋",  "初一二班",  1,  "1224354434232" );
+        //sd.insertStudent(s1);
+        //System.out.print(sd.getStudent().get(1).getStudentname());
+        System.out.print(sd.modifyStudent(s1));
+        //sd.delStudent(2);
+        System.out.print(sd.getStudent().get(1).getStudentname());
     }
 
 }
