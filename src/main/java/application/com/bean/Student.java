@@ -11,7 +11,37 @@ public class Student {
 
     private Integer schoolid;
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public Student(String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone, String userName, String userPass) {
+        this.studentnunber = studentnunber;
+        this.studentname = studentname;
+        this.studentgrade = studentgrade;
+        this.schoolid = schoolid;
+        this.studentphone = studentphone;
+        this.userName = userName;
+        this.userPass = userPass;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPass() {
+        return userPass;
+    }
+
+    public void setUserPass(String userPass) {
+        this.userPass = userPass;
+    }
+
     private String studentphone;
+
+    private String userName;
+
+    private String userPass;
 
     public Integer getStudentid() {
         return studentid;

@@ -1,7 +1,9 @@
 package  application.com;
-import application.com.bean.Poetry;
-import application.com.bean.Record;
+import application.com.bean.*;
 import application.com.dao.poetryDao;
+import application.com.dao.schoolDao;
+import application.com.dao.studentDao;
+import application.com.dao.teacherDao;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +26,9 @@ import java.util.Map;
 @EnableAutoConfiguration
 public class Application {
     poetryDao poetryDao =new poetryDao();
+    studentDao stuDao =new studentDao();
+    teacherDao teachDao =new teacherDao();
+    schoolDao schDao =new schoolDao();
 
 
     @RequestMapping("/index")
@@ -168,6 +173,347 @@ public class Application {
 
     }
     //  #############################################################
+
+
+
+
+    //学生管理的映射
+    //  #############################################################
+    //增加学生信息
+    @RequestMapping("/addStudent")
+    public void addStudent(HttpServletRequest request, HttpServletResponse response){
+        String userName =request.getParameter("userName");
+        String userPass =request.getParameter("userPass");
+        String schoolIDString =request.getParameter("schoolID");
+        String studentNumber =request.getParameter("studentNumber");
+        String studentName =request.getParameter("studentName");
+        String studentGrade =request.getParameter("studentGrade");
+        String studentPhone =request.getParameter("studentPhone");
+        int studentID=0;
+        int schoolID =0;
+        if(schoolIDString!=null){
+            schoolID =Integer.parseInt(schoolIDString);
+        }
+        Student student =new Student(studentNumber,studentName,studentGrade,schoolID,studentPhone,userName,userPass);
+        boolean flag = stuDao.insertStudent(student);
+        String str = "{\"flag\":\""+flag+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //删除学生信息
+    @RequestMapping("/deleteStudent")
+    public void deleteStudent(HttpServletRequest request, HttpServletResponse response){
+            String studentIDString =request.getParameter("studentID");
+            int studentID=0;
+            if(studentIDString!=null){
+                studentID =Integer.parseInt(studentIDString);
+            }
+            boolean flag = stuDao.delStudent(studentID);
+        String str = "{\"flag\":\""+flag+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //修改学生信息
+    @RequestMapping("/modifyStudent")
+    public void modifyStudent(HttpServletRequest request, HttpServletResponse response){
+        String studentIDString =request.getParameter("studentID");
+        String schoolIDString =request.getParameter("schoolID");
+        String studentNumber =request.getParameter("studentNumber");
+        String studentName =request.getParameter("studentName");
+        String studentGrade =request.getParameter("studentGrade");
+        String studentPhone =request.getParameter("studentPhone");
+        int studentID=0;
+        int schoolID =0;
+        if(schoolIDString!=null&&studentIDString!=null){
+            studentID =Integer.parseInt(studentIDString);
+            schoolID =Integer.parseInt(schoolIDString);
+        }
+        Student student =new Student(schoolID,studentNumber,studentName,studentGrade,schoolID,studentPhone);
+        boolean flag =stuDao.modifyStudent(student);
+        String str = "{\"flag\":\""+flag+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    //获取指定学生
+    @RequestMapping("/getOneStudent")
+    public void getOneStudent(HttpServletRequest request, HttpServletResponse response){
+         String studentIDString =request.getParameter("studentID");
+         int studentID=0;
+         if(studentIDString!=null){
+             studentID = Integer.parseInt(studentIDString);
+         }
+    //     Student student = stuDao.getOneStudent(studentID);
+        List<Student> stuList = new ArrayList<Student>();
+   //     stuList.add(student);
+        JSONArray jsonArray =JSONArray.fromObject(stuList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("stuList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //获取所有学生
+    @RequestMapping("/getAllStudent")
+    public void getAllStudetn(HttpServletResponse response){
+        List<Student> stuList =stuDao.getStudent();
+        JSONArray jsonArray =JSONArray.fromObject(stuList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("stuList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    //根据指定条件获取学生
+    //@RequestMapping("")
+
+    //  #############################################################
+
+
+    //教师管理的映射
+    //  #############################################################
+    //增加教师
+    @RequestMapping("/addTeacher")
+    public void addTeacher(HttpServletRequest request, HttpServletResponse response){
+        String userName =request.getParameter("userName");
+        String userPass =request.getParameter("userPass");
+        String schoolIDString  =request.getParameter("schoolID");
+        String teacherNumber =request.getParameter("teacherNumber");
+        String teacherName =request.getParameter("teacherName");
+        String teacherPhone =request.getParameter("teacherPhone");
+        int teacherID =0;
+        int schoolID =0;
+        if(schoolIDString!=null){
+            schoolID =Integer.parseInt(schoolIDString);
+        }
+        Teacher teacher =new Teacher(teacherNumber,teacherName,schoolID,teacherPhone,userName,userPass);
+        boolean flag =teachDao.insertTeacher(teacher);
+        String str = "{\"flag\":\""+flag+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //删除教师
+    @RequestMapping("/deleteTeacher")
+    public void deleteTeacher(HttpServletRequest request, HttpServletResponse response){
+        String teacherIDString =request.getParameter("teacherID");
+        int teacherID=0;
+        if(teacherIDString!=null){
+            teacherID =Integer.parseInt(teacherIDString);
+        }
+        boolean flag =teachDao.delTeacher(teacherID);
+        String str = "{\"flag\":\""+flag+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //修改教师个人信息
+    @RequestMapping("/modifyTeacher")
+    public void modifyTeacher(HttpServletRequest request, HttpServletResponse response){
+        String teacherIDString =request.getParameter("teacherID");
+        String schoolIDString  =request.getParameter("schoolID");
+        String teacherNumber =request.getParameter("teacherNumber");
+        String teacherName =request.getParameter("teacherName");
+        String teacherPhone =request.getParameter("teacherPhone");
+        int teacherID =0;
+        int schoolID =0;
+        if(teacherIDString!=null&&schoolIDString!=null){
+            teacherID =Integer.parseInt(teacherIDString);
+            schoolID =Integer.parseInt(schoolIDString);
+        }
+        Teacher teacher =new Teacher(teacherID,teacherNumber,teacherName,schoolID,teacherPhone);
+        boolean flag =teachDao.modifyTeacher(teacher);
+        String str = "{\"flag\":\""+flag+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //搜索教师
+    @RequestMapping("/searchTeacher")
+    public void searchTeacher(){
+
+    }
+    //获取所有教师
+    @RequestMapping("/getAllTeacher")
+    public void getAllTeacher(HttpServletResponse response){
+        List<Teacher> teachList =teachDao.getTeacher();
+        JSONArray jsonArray =JSONArray.fromObject(teachList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("teachList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    //根据指定条件获取老师
+
+
+
+    //  #############################################################
+
+    //学校管理的映射
+    //  #############################################################
+    //增加学校
+    @RequestMapping("/addSchool")
+    public void addSchool(HttpServletRequest request, HttpServletResponse response){
+        String schoolName =request.getParameter("schoolName");
+        String schoolProvice =request.getParameter("schoolProvince");
+        String schooAddress =request.getParameter("schoolAddress");
+        String schoolType =request.getParameter("schoolType");
+        String schoolPhone =request.getParameter("schoolPhone");
+        School school =new School(schoolName,schoolProvice,schooAddress,schoolType,schoolPhone);
+        boolean flag =schDao.insertSchool(school);
+        String str = "{\"flag\":\""+flag+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //删除学校
+    @RequestMapping("/deleteSchool")
+    public void deleteSchool(HttpServletRequest request, HttpServletResponse response){
+        String schoolDString =request.getParameter("schoolID");
+        int schoolID =0;
+        if(schoolDString!=null){
+            schoolID =Integer.parseInt(schoolDString);
+        }
+        boolean flag =schDao.delSchool(schoolID);
+        String str = "{\"flag\":\""+flag+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //修改学校
+    @RequestMapping("/modifySchool")
+    public  void modifySchool(HttpServletRequest request, HttpServletResponse response){
+        String schoolIDString =request.getParameter("schoolID");
+        String schoolName =request.getParameter("schoolName");
+        String schoolProvice =request.getParameter("schoolProvince");
+        String schoolAddress =request.getParameter("schoolAddress");
+        String schoolType =request.getParameter("schoolType");
+        String schoolPhone =request.getParameter("schoolPhone");
+        int schoolID =0;
+        if(schoolIDString!=null){
+            schoolID =Integer.parseInt(schoolIDString);
+        }
+        School school =new School(schoolID,schoolName,schoolProvice,schoolAddress,schoolType,schoolPhone);
+        boolean flag =schDao.modifyStudent(school);
+        String str = "{\"flag\":\""+flag+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //获取所有学校
+    @RequestMapping("/getAllSchool")
+    public void getAllSchool(HttpServletResponse response){
+        List<School> schoolList =schDao.getSchool();
+        JSONArray jsonArray =JSONArray.fromObject(schoolList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("schoolList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
     }

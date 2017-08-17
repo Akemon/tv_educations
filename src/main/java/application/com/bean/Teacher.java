@@ -11,6 +11,35 @@ public class Teacher {
 
     private String teacherphone;
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public Teacher(String teachernumber, String teachername, Integer schoolid, String teacherphone, String userName, String userPass) {
+        this.teachernumber = teachernumber;
+        this.teachername = teachername;
+        this.schoolid = schoolid;
+        this.teacherphone = teacherphone;
+        this.userName = userName;
+        this.userPass = userPass;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPass() {
+        return userPass;
+    }
+
+    public void setUserPass(String userPass) {
+        this.userPass = userPass;
+    }
+
+    private String userName;
+
+    private String userPass;
+
     public Integer getTeacherid() {
         return teacherid;
     }
