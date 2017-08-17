@@ -79,4 +79,24 @@ public class schoolDao {
         return null;
 
     }
+    //根据省份获取学校
+    public List getSchoolForProvince(){
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_school where schoolProvince");
+            ResultSet rs = preparedStatement.executeQuery();
+
+            List<School> schools=new ArrayList<School>();
+            while (rs.next()) {
+                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"));
+                schools.add(school);
+            }
+            return schools;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+
+    }
 }

@@ -57,16 +57,36 @@ public class teacherDao {
         }
         return false;
     }
-    //获取特定老师
-    public Teacher getOneTeacher(int teacherID) {
+    //根据工号获取特定老师
+    public Teacher getTeacherForNumber(String teacherNumber) {
         Teacher teacher;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher  where teacherID= ?");
-            preparedStatement.setInt(1, teacherID);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher  where teacherNumber= ?");
+            preparedStatement.setString(1, teacherNumber);
             ResultSet rs = preparedStatement.executeQuery();
-            teacher = new Teacher(teacherID, rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"));
+            teacher = new Teacher(rs.getInt("teacherID"),teacherNumber,  rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"));
             return teacher;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+    //根据姓名获取老师
+    public List getTeacherForName(String teacherName) {
+        Teacher teacher;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher  where %?%");
+            preparedStatement.setString(1, teacherName);
+            ResultSet rs = preparedStatement.executeQuery();
+            List<Teacher> teachers=new ArrayList<Teacher>();
+            while(rs.next()){
+                teacher = new Teacher(rs.getInt("teacherID"),rs.getString("teacherNumber"), teacherName, rs.getInt("schoolID"), rs.getString("teacherPhone"));
+                teachers.add(teacher);
+            }
+            return teachers;
         } catch (SQLException e) {
             e.printStackTrace();
 

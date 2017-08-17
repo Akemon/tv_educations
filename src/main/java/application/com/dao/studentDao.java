@@ -59,16 +59,38 @@ public class studentDao {
         }
         return false;
     }
-    //获取特定学生
-   public Student getOneStudent(int studentID) {
+    //根据学号获取特定学生
+   public Student getStudentForNumber(String studentNumber) {
        Student student;
 
        try {
-           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student  where studentID= ?");
-           preparedStatement.setInt(1, studentID);
+           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student  where studentNumber= ?");
+           preparedStatement.setString(1, studentNumber);
            ResultSet rs = preparedStatement.executeQuery();
-           student = new Student(studentID, rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"));
+           student = new Student(rs.getInt("studentID"),studentNumber,  rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"));
            return student;
+       } catch (SQLException e) {
+           e.printStackTrace();
+
+       }
+       return null;
+   }
+   //根据姓名获取学生
+   public List getStudentForName(String studentName) {
+       Student student;
+
+       try {
+           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student like %?% ");
+           preparedStatement.setString(1, studentName);
+           ResultSet rs = preparedStatement.executeQuery();
+
+           List<Student> students=new ArrayList<Student>();
+           while(rs.next()){
+               student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"));
+           students.add(student);
+           }
+           return students;
+
        } catch (SQLException e) {
            e.printStackTrace();
 
@@ -95,11 +117,12 @@ public class studentDao {
        return null;
 
    }
-   //根据学校获取学生
-   public List getStudentForSchool(int schoolid){
+   //根据学校、班级获取学生
+   public List getStudentForSchoolAndGrade(String studentGrade,String Schoolid){
        try {
-           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student where schoolID=?");
-           preparedStatement.setInt(1,schoolid );
+           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student where studentGrade=? and schoolID=?");
+           preparedStatement.setString(1,studentGrade );
+           preparedStatement.setString(2,Schoolid );
            ResultSet rs = preparedStatement.executeQuery();
            List<Student> students=new ArrayList<Student>();
            while (rs.next()) {
@@ -115,4 +138,22 @@ public class studentDao {
        return null;
 
    }
+   //根据学校获取班级
+    public List getSchoolGrade(int schoolid){
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select distinct  studentGrade from tv_student where schoolID=? ");
+            preparedStatement.setInt(1,schoolid );
+            ResultSet rs = preparedStatement.executeQuery();
+            List<String> students=new ArrayList<String>();
+            while (rs.next()) {
+                students.add(rs.getString("studentGrade"));
+            }
+            return students;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
 }
