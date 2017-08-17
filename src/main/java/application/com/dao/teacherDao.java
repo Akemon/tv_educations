@@ -107,10 +107,10 @@ public class teacherDao {
 
     }
     //根据省份、学校获取老师
-    public List<Teacher> getTeacherForSchool(int schoolName,String schoolProvince){
+    public List<Teacher> getTeacherForSchool(String schoolName,String schoolProvince){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher,tv_school where tv_teacher.schoolID=tv_school.schoolID AND schoolName=? and schoolProvince=?");
-            preparedStatement.setInt(1,schoolName );
+            preparedStatement.setString(1,schoolName );
             preparedStatement.setString(2,schoolProvince );
             ResultSet rs = preparedStatement.executeQuery();
             List<Teacher> teachers=new ArrayList<Teacher>();
