@@ -77,8 +77,8 @@ public class studentDao {
 
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student where studentName like %?% ");
-            preparedStatement.setString(1, search);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student where studentName like ? ");
+            preparedStatement.setString(1,"%"+search+"%");
             ResultSet rs = preparedStatement.executeQuery();
 
             List<Student> students = new ArrayList<Student>();
@@ -86,8 +86,8 @@ public class studentDao {
                 Student student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"));
                 students.add(student);
             }
-            PreparedStatement preparedStatement2 = connection.prepareStatement("select * from tv_student where studentNunber like %?% ");
-            preparedStatement2.setString(1, search);
+            PreparedStatement preparedStatement2 = connection.prepareStatement("select * from tv_student where studentNunber like ? ");
+            preparedStatement2.setString(1,"%"+search+"%");
             ResultSet rs2 = preparedStatement2.executeQuery();
             while (rs2.next()) {
                 Student student = new Student(rs2.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"));

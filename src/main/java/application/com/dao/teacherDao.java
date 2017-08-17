@@ -62,8 +62,8 @@ public class teacherDao {
 
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher  where teacherName like %?%");
-            preparedStatement.setString(1, search);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher  where teacherName like ?");
+            preparedStatement.setString(1, "%"+search+"%");
             ResultSet rs = preparedStatement.executeQuery();
             List<Teacher> teachers=new ArrayList<Teacher>();
             while(rs.next()){
@@ -71,8 +71,8 @@ public class teacherDao {
                 teachers.add(teacher);
             }
 
-            PreparedStatement preparedStatement2 = connection.prepareStatement("select * from tv_teacher  where teacherNumber like %?%");
-            preparedStatement2.setString(1, search);
+            PreparedStatement preparedStatement2 = connection.prepareStatement("select * from tv_teacher  where teacherNumber like ?");
+            preparedStatement2.setString(1, "%"+search+"%");
             ResultSet rs2= preparedStatement2.executeQuery();
             while(rs2.next()){
                 Teacher  teacher = new Teacher(rs.getInt("teacherID"),rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"));
