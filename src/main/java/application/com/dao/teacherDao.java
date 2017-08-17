@@ -15,11 +15,19 @@ public class teacherDao {
     //插入教师
     public boolean insertTeacher(Teacher tea){
         try {
-            PreparedStatement preparedStatement =connection.prepareStatement("INSERT  into tv_teacher(teacherNunber,teacherName,schoolID,teacherPhone) VALUES (?,?,?,?)");
+            PreparedStatement preparedStatement2 = connection.prepareStatement("select * from tv_teacher where  userName=? ");
+            preparedStatement2.setString(1, tea.getUserName());
+            ResultSet rs = preparedStatement2.executeQuery();
+            if (rs.next()) {
+                return false;
+            }
+            PreparedStatement preparedStatement =connection.prepareStatement("INSERT  into tv_teacher(teacherNunber,teacherName,schoolID,teacherPhone) VALUES (?,?,?,?,?,?)");
             preparedStatement.setString(1,tea.getTeachernumber());
             preparedStatement.setString(2,tea.getTeachername());
             preparedStatement.setInt(3,tea.getSchoolid());
             preparedStatement.setString(4,tea.getTeacherphone());
+            preparedStatement.setString(5,tea.getUserName());
+            preparedStatement.setString(6,tea.getUserPass());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -146,6 +154,11 @@ public class teacherDao {
 
         }
         return null;
+    }
+    //教师注册
+
+    public boolean teacherRegister(Teacher teacher) {
+         return insertTeacher(teacher);
     }
 
 }
