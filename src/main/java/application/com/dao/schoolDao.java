@@ -33,6 +33,14 @@ public class schoolDao {
     //删除学校
     public boolean delSchool(int schoolID){
         try{
+            PreparedStatement preparedStatement2 =connection.prepareStatement("SELECT * from tv_student where schoolID= ?");
+            preparedStatement2.setInt(1,schoolID);
+            if(preparedStatement2.executeQuery().next()){return false;};
+
+            PreparedStatement preparedStatement3 =connection.prepareStatement("SELECT * from tv_teacher where schoolID= ?");
+            preparedStatement3.setInt(1,schoolID);
+            if(preparedStatement3.executeQuery().next()){return false;};
+
             PreparedStatement preparedStatement =connection.prepareStatement("DELETE from tv_school where schoolID= ?");
             preparedStatement.setInt(1,schoolID);
             preparedStatement.executeUpdate();

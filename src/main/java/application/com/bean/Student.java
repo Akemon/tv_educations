@@ -11,6 +11,8 @@ public class Student {
 
     private Integer schoolid;
 
+    private String schoolname;
+
     public String getUserName() {
         return userName;
     }
@@ -98,5 +100,14 @@ public class Student {
         this.studentgrade = studentgrade;
         this.schoolid = schoolid;
         this.studentphone = studentphone;
+    }
+    public Student(Integer studentid, String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone,String schoolname) {
+        this.studentid = studentid;
+        this.studentnunber = studentnunber;
+        this.studentname = studentname;
+        this.studentgrade = studentgrade;
+        this.schoolid = schoolid;
+        this.studentphone = studentphone;
+        this.schoolname=schoolname;
     }
 }

@@ -127,4 +127,25 @@ public class teacherDao {
         return null;
 
     }
+
+    //教师登陆
+    public Teacher studentLogin(String userName, String userPass) {
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher,tv_school where tv_student.schoolID=tv_school.schoolID AND userName=? and userPass=?");
+            preparedStatement.setString(1, userName);
+            preparedStatement.setString(2, userPass);
+            ResultSet rs = preparedStatement.executeQuery();
+            System.out.print("eqq:" + rs);
+            if (rs.next()) {
+                Teacher teacher = new Teacher(rs.getInt("teacherID"), rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"));
+                return teacher;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
 }
