@@ -261,17 +261,11 @@ public class Application {
         }
 
     }
-    //获取指定学生
-    @RequestMapping("/getOneStudent")
+    //搜索学生
+    @RequestMapping("/searchStudent")
     public void getOneStudent(HttpServletRequest request, HttpServletResponse response){
-         String studentIDString =request.getParameter("studentID");
-         int studentID=0;
-         if(studentIDString!=null){
-             studentID = Integer.parseInt(studentIDString);
-         }
-    //     Student student = stuDao.getOneStudent(studentID);
-        List<Student> stuList = new ArrayList<Student>();
-   //     stuList.add(student);
+         String search =request.getParameter("search");
+         List<Student> stuList =stuDao.searchStudent(search);
         JSONArray jsonArray =JSONArray.fromObject(stuList);
         JSONObject jsonObject =new JSONObject();
         jsonObject.put("stuList", jsonArray);
@@ -305,8 +299,66 @@ public class Application {
         }
 
     }
-    //根据指定条件获取学生
-    //@RequestMapping("")
+
+    //根据省份获取学校
+    @RequestMapping("getSchoolByProvince")
+    public void getSchoolByProvince(HttpServletRequest request, HttpServletResponse response){
+        String province =request.getParameter("province");
+        List<School> schoolList =schDao.getSchoolForProvince(province);
+        JSONArray jsonArray =JSONArray.fromObject(schoolList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("schoolList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //根据省份,学校获取班级
+    @RequestMapping("/getClassBySchool")
+    public void getClassBySchool(HttpServletRequest request, HttpServletResponse response){
+            String schoolName =request.getParameter("schoolName");
+            String province =request.getParameter("province");
+            List<String> ClassList =stuDao.getSchoolGrade(schoolName,province);
+            JSONArray jsonArray =JSONArray.fromObject(ClassList);
+            JSONObject jsonObject =new JSONObject();
+            jsonObject.put("ClassList", jsonArray);
+            System.out.println(jsonObject.toString());
+            response.setContentType("application/json; charset=utf-8");
+            PrintWriter out = null;
+            try {
+                out =response.getWriter();
+                out.println(jsonObject.toString());
+                 } catch (IOException e) {
+                    e.printStackTrace();
+            }
+    }
+
+    //根据省份，学校，班级获取学生
+    @RequestMapping("/getStudentByProvinceSchoolClass")
+    public void getStudentByProvinceSchoolClass(HttpServletRequest request, HttpServletResponse response){
+        String province =request.getParameter("province");
+        String schoolName =request.getParameter("schoolName");
+        String gradeName = request.getParameter("gradeName");
+        List<Student>  studentList = stuDao.getStudentForSchoolAndGrade(gradeName,schoolName,province);
+        JSONArray jsonArray =JSONArray.fromObject(studentList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("studentList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     //  #############################################################
 
@@ -394,16 +446,29 @@ public class Application {
 
     //搜索教师
     @RequestMapping("/searchTeacher")
-    public void searchTeacher(){
-
+    public void searchTeacher(HttpServletRequest request, HttpServletResponse response){
+        String search =request.getParameter("search");
+        List<Teacher> teachList =teachDao.searchTeacher(search);
+        JSONArray jsonArray =JSONArray.fromObject(teachList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("teacherList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     //获取所有教师
     @RequestMapping("/getAllTeacher")
     public void getAllTeacher(HttpServletResponse response){
-        List<Teacher> teachList =teachDao.getTeacher();
-        JSONArray jsonArray =JSONArray.fromObject(teachList);
+        List<Teacher> teacherList =teachDao.getTeacher();
+        JSONArray jsonArray =JSONArray.fromObject(teacherList);
         JSONObject jsonObject =new JSONObject();
-        jsonObject.put("teachList", jsonArray);
+        jsonObject.put("teacherList", jsonArray);
         System.out.println(jsonObject.toString());
         response.setContentType("application/json; charset=utf-8");
         PrintWriter out = null;
@@ -415,7 +480,26 @@ public class Application {
         }
 
     }
-    //根据指定条件获取老师
+    //根据省份,学校获取教师
+    @RequestMapping("/getTeacherByProvinceSchool")
+    public void getTeacherByProvinceSchool(HttpServletRequest request, HttpServletResponse response){
+        String province =request.getParameter("province");
+        String schoolName =request.getParameter("schoolName");
+        List<Teacher> teacherList =teachDao.getTeacherForSchool(schoolName,province);
+        JSONArray jsonArray =JSONArray.fromObject(teacherList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("teacherList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
@@ -499,6 +583,25 @@ public class Application {
     @RequestMapping("/getAllSchool")
     public void getAllSchool(HttpServletResponse response){
         List<School> schoolList =schDao.getSchool();
+        JSONArray jsonArray =JSONArray.fromObject(schoolList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("schoolList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //搜索学校
+    @RequestMapping("/searchSchool")
+    public void searchSchool(HttpServletRequest request, HttpServletResponse response){
+        String search =request.getParameter("search");
+        List<School> schoolList =schDao.getSchoolForName(search);
         JSONArray jsonArray =JSONArray.fromObject(schoolList);
         JSONObject jsonObject =new JSONObject();
         jsonObject.put("schoolList", jsonArray);
