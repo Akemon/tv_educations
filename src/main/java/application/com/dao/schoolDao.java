@@ -100,13 +100,34 @@ public class schoolDao {
         return null;
 
     }
-    public static  void main(String[] args){
-        schoolDao sd=new schoolDao();
-        School s1=new School(2,"深圳高级实验中学","广东省","深圳市","中学","2434343");
+    //根据学校名字搜索
+    public List getSchoolForName(String schoolname){
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_school where schoolName=%?%");
+            preparedStatement.setString(1,schoolname);
+            ResultSet rs = preparedStatement.executeQuery();
 
-        //System.out.print(sd.insertSchool(s1));
-        //System.out.print(sd.modifyStudent(s1));
-        System.out.print(sd.getSchool());
-        System.out.print(sd.getSchoolForProvince("广东省 "));
+            List<School> schools=new ArrayList<School>();
+            while (rs.next()) {
+                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"));
+                schools.add(school);
+            }
+            return schools;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+
     }
+//    public static  void main(String[] args){
+//        schoolDao sd=new schoolDao();
+//        School s1=new School(2,"深圳高级实验中学","广东省","深圳市","中学","2434343");
+//
+//        //System.out.print(sd.insertSchool(s1));
+//        //System.out.print(sd.modifyStudent(s1));
+//        System.out.print(sd.getSchool());
+//        System.out.print(sd.getSchoolForProvince("广东省 "));
+//    }
 }

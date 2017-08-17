@@ -46,8 +46,8 @@ public class adminDao {
      }
      return false;
  }
-public static void main(String[] args){
-     adminDao ad=new adminDao();
-     System.out.print(ad.logout("hk"));
-}
+//public static void main(String[] args){
+//     adminDao ad=new adminDao();
+//     System.out.print(ad.logout("hk"));
+//}
 }

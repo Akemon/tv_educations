@@ -20,21 +20,21 @@ public class DBConn {
 		return connection;
 	}
 
-	public static void main(String[] args) {
-		Connection connection =new DBConn().getConnect();
-		Statement statement;
-		try {
-			statement = connection.createStatement();
-			ResultSet rs =statement.executeQuery("select * from tv_poetry");
-			while(rs.next()){
-				System.out.println(rs.getString("title"));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+//	public static void main(String[] args) {
+//		Connection connection =new DBConn().getConnect();
+//		Statement statement;
+//		try {
+//			statement = connection.createStatement();
+//			ResultSet rs =statement.executeQuery("select * from tv_poetry");
+//			while(rs.next()){
+//				System.out.println(rs.getString("title"));
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 
 

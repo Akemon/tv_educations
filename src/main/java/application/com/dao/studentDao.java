@@ -61,7 +61,7 @@ public class studentDao {
     }
 
    //搜索学生
-   public List searchStudent(String search) {
+   public List<Student> searchStudent(String search) {
 
 
        try {
@@ -90,7 +90,7 @@ public class studentDao {
        return null;
    }
    //获取所有学生
-   public List getStudent(){
+   public List<Student> getStudent(){
        try {
            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student ");
 
@@ -110,11 +110,12 @@ public class studentDao {
 
    }
    //根据学校、班级获取学生
-   public List getStudentForSchoolAndGrade(String studentGrade,String Schoolid){
+   public List<Student> getStudentForSchoolAndGrade(String studentGrade,String Schoolid,String schoolProvince){
        try {
            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student where studentGrade=? and schoolID=?");
            preparedStatement.setString(1,studentGrade );
            preparedStatement.setString(2,Schoolid );
+          // preparedStatement.setString(3,schoolProvince );
            ResultSet rs = preparedStatement.executeQuery();
            List<Student> students=new ArrayList<Student>();
            while (rs.next()) {
@@ -131,7 +132,7 @@ public class studentDao {
 
    }
    //根据学校获取班级
-    public List getSchoolGrade(int schoolid){
+    public List<String> getSchoolGrade(int schoolid){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select distinct  studentGrade from tv_student where schoolID=? ");
             preparedStatement.setInt(1,schoolid );
