@@ -110,11 +110,11 @@ public class studentDao {
 
    }
    //根据省份、学校、班级获取学生
-   public List<Student> getStudentForSchoolAndGrade(String studentGrade,String Schoolid,String schoolProvince){
+   public List<Student> getStudentForSchoolAndGrade(String studentGrade,String SchoolName,String schoolProvince){
        try {
-           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student where tv_student.schoolID=tv_school.schoolID AND studentGrade=? and schoolID=? AND schoolProvince=?");
+           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student,tv_school where tv_student.schoolID=tv_school.schoolID AND studentGrade=? and schoolName=? AND schoolProvince=?");
            preparedStatement.setString(1,studentGrade );
-           preparedStatement.setString(2,Schoolid );
+           preparedStatement.setString(2,SchoolName );
            preparedStatement.setString(3,schoolProvince );
            ResultSet rs = preparedStatement.executeQuery();
            List<Student> students=new ArrayList<Student>();
@@ -131,11 +131,12 @@ public class studentDao {
        return null;
 
    }
-   //根据学校获取班级
-    public List<String> getSchoolGrade(int schoolid){
+   //根据省份、学校获取班级
+    public List<String> getSchoolGrade(int schoolid,String schoolprovvince){
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select distinct  studentGrade from tv_student where schoolID=? ");
+            PreparedStatement preparedStatement = connection.prepareStatement("select distinct  studentGrade from tv_student,tv_school where tv_student.schoolID=tv_school.schoolID and tv_student.schoolID=? AND schoolProvince=?");
             preparedStatement.setInt(1,schoolid );
+            preparedStatement.setString(2,schoolprovvince );
             ResultSet rs = preparedStatement.executeQuery();
             List<String> students=new ArrayList<String>();
             while (rs.next()) {
@@ -149,4 +150,8 @@ public class studentDao {
         }
         return null;
     }
+    //登陆
+//    public boolean studentLogin(){
+//
+//    }
 }
