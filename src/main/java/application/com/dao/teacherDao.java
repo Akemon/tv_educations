@@ -57,35 +57,28 @@ public class teacherDao {
         }
         return false;
     }
-    //根据工号获取特定老师
-    public Teacher getTeacherForNumber(String teacherNumber) {
-        Teacher teacher;
+    //搜索老师
+    public List searchTeacher(String search) {
+
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher  where teacherNumber= ?");
-            preparedStatement.setString(1, teacherNumber);
-            ResultSet rs = preparedStatement.executeQuery();
-            teacher = new Teacher(rs.getInt("teacherID"),teacherNumber,  rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"));
-            return teacher;
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        return null;
-    }
-    //根据姓名获取老师
-    public List getTeacherForName(String teacherName) {
-        Teacher teacher;
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher  where %?%");
-            preparedStatement.setString(1, teacherName);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher  where teacherName like %?%");
+            preparedStatement.setString(1, search);
             ResultSet rs = preparedStatement.executeQuery();
             List<Teacher> teachers=new ArrayList<Teacher>();
             while(rs.next()){
-                teacher = new Teacher(rs.getInt("teacherID"),rs.getString("teacherNumber"), teacherName, rs.getInt("schoolID"), rs.getString("teacherPhone"));
+                Teacher  teacher = new Teacher(rs.getInt("teacherID"),rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"));
                 teachers.add(teacher);
             }
+
+            PreparedStatement preparedStatement2 = connection.prepareStatement("select * from tv_teacher  where teacherNumber like %?%");
+            preparedStatement2.setString(1, search);
+            ResultSet rs2= preparedStatement2.executeQuery();
+            while(rs2.next()){
+                Teacher  teacher = new Teacher(rs.getInt("teacherID"),rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"));
+                teachers.add(teacher);
+            }
+
             return teachers;
         } catch (SQLException e) {
             e.printStackTrace();

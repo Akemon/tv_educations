@@ -1,13 +1,11 @@
 package application.com.dao;
 
-import application.com.bean.School;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class adminDao {
     Connection connection =new DBConn().getConnect();
@@ -18,6 +16,7 @@ public class adminDao {
             preparedStatement.setString(1,adminName);
             preparedStatement.setString(2,adminPass);
             ResultSet rs = preparedStatement.executeQuery();
+            System.out.print("eqq:"+rs);
             if(rs.next()){
                  preparedStatement = connection.prepareStatement("UPDATE  tv_adminlogin set adminStatus='在线' where adminName=?");
                 preparedStatement.setString(1,adminName);
@@ -47,5 +46,8 @@ public class adminDao {
      }
      return false;
  }
-
+public static void main(String[] args){
+     adminDao ad=new adminDao();
+     System.out.print(ad.logout("hk"));
+}
 }

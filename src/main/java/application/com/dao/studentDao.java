@@ -59,35 +59,27 @@ public class studentDao {
         }
         return false;
     }
-    //根据学号获取特定学生
-   public Student getStudentForNumber(String studentNumber) {
-       Student student;
+
+   //搜索学生
+   public List searchStudent(String search) {
+
 
        try {
-           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student  where studentNumber= ?");
-           preparedStatement.setString(1, studentNumber);
-           ResultSet rs = preparedStatement.executeQuery();
-           student = new Student(rs.getInt("studentID"),studentNumber,  rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"));
-           return student;
-       } catch (SQLException e) {
-           e.printStackTrace();
-
-       }
-       return null;
-   }
-   //根据姓名获取学生
-   public List getStudentForName(String studentName) {
-       Student student;
-
-       try {
-           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student like %?% ");
-           preparedStatement.setString(1, studentName);
+           PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student where studentName like %?% ");
+           preparedStatement.setString(1, search);
            ResultSet rs = preparedStatement.executeQuery();
 
            List<Student> students=new ArrayList<Student>();
            while(rs.next()){
-               student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"));
+               Student  student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"));
            students.add(student);
+           }
+           PreparedStatement preparedStatement2 = connection.prepareStatement("select * from tv_student where studentNunber like %?% ");
+           preparedStatement2.setString(1, search);
+           ResultSet rs2 = preparedStatement2.executeQuery();
+           while(rs2.next()){
+               Student student = new Student(rs2.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"));
+               students.add(student);
            }
            return students;
 
