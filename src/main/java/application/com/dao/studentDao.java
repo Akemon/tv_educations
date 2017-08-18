@@ -15,9 +15,7 @@ public class studentDao {
 
     //插入学生
     public boolean insertStudent(Student stu) {
-
-        try {
-
+        try{
             PreparedStatement preparedStatement2 = connection.prepareStatement("select * from tv_student where  userName=? ");
             preparedStatement2.setString(1, stu.getUserName());
             ResultSet rs = preparedStatement2.executeQuery();
@@ -190,17 +188,37 @@ public class studentDao {
     public boolean studentRegister(Student student) {
                  return insertStudent(student);
     }
+// 统计学生数量
+    public int countStudent(){
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select  count(*) from tv_student ");
 
-    public static void main(String[] args){
-        studentDao sd=new studentDao();
-        System.out.print(sd.searchStudent("冯").get(0).getStudentname());
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){int sum=rs.getInt(1);
+                return sum;}
 
-        Student s1=new Student( 2,"11245533",  "柳蛋",  "初一二班",  1,  "1224354434232" );
-        //sd.insertStudent(s1);
-        //System.out.print(sd.getStudent().get(1).getStudentname());
-        System.out.print(sd.modifyStudent(s1));
-        //sd.delStudent(2);
-        System.out.print(sd.getStudent().get(1).getStudentname());
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+      return 0;
     }
+   // public static void main(String[] args){
+      //  studentDao sd=new studentDao();
+       // System.out.print(sd.searchStudent("冯").get(0).getStudentname());
+//
+       // Student s1=new Student( "11245533",  "柳而蛋",  "初一二班",  1,  "1224354434232","www","123" );
+      //  sd.insertStudent(s1);
+        //System.out.print(sd.getStudent().get(1).getStudentname());
+        //System.out.print(sd.modifyStudent(s1));
+        //sd.delStudent(2);
+        //System.out.print(sd.getStudent().get(1).getStudentname());
+
+       // System.out.print(sd.countStudent());
+  //  }
 
 }

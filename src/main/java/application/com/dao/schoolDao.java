@@ -35,11 +35,11 @@ public class schoolDao {
         try{
             PreparedStatement preparedStatement2 =connection.prepareStatement("SELECT * from tv_student where schoolID= ?");
             preparedStatement2.setInt(1,schoolID);
-            if(preparedStatement2.executeQuery().next()){return false;};
+            if(preparedStatement2.executeQuery().next()){return false;}
 
             PreparedStatement preparedStatement3 =connection.prepareStatement("SELECT * from tv_teacher where schoolID= ?");
             preparedStatement3.setInt(1,schoolID);
-            if(preparedStatement3.executeQuery().next()){return false;};
+            if(preparedStatement3.executeQuery().next()){return false;}
 
             PreparedStatement preparedStatement =connection.prepareStatement("DELETE from tv_school where schoolID= ?");
             preparedStatement.setInt(1,schoolID);
@@ -111,8 +111,8 @@ public class schoolDao {
     //根据学校名字搜索
     public List getSchoolForName(String schoolname){
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_school where schoolName=%?%");
-            preparedStatement.setString(1,schoolname);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_school where schoolName= ?");
+            preparedStatement.setString(1,"%"+schoolname+"%");
             ResultSet rs = preparedStatement.executeQuery();
 
             List<School> schools=new ArrayList<School>();
@@ -129,13 +129,36 @@ public class schoolDao {
         return null;
 
     }
-//    public static  void main(String[] args){
-//        schoolDao sd=new schoolDao();
-//        School s1=new School(2,"深圳高级实验中学","广东省","深圳市","中学","2434343");
-//
-//        //System.out.print(sd.insertSchool(s1));
-//        //System.out.print(sd.modifyStudent(s1));
-//        System.out.print(sd.getSchool());
-//        System.out.print(sd.getSchoolForProvince("广东省 "));
-//    }
+   //统计学校数量
+   public int countSchool(){
+       try {
+           PreparedStatement preparedStatement = connection.prepareStatement("select  count(*) from tv_school ");
+
+           ResultSet rs = preparedStatement.executeQuery();
+           if(rs.next()){int sum=rs.getInt(1);
+               return sum;}
+
+
+
+
+       } catch (SQLException e) {
+           e.printStackTrace();
+
+       }
+
+       return 0;
+
+
+   }
+
+  //  public static  void main(String[] args){
+       // schoolDao sd=new schoolDao();
+      //  School s1=new School(2,"深圳高级实验中学","广东省","深圳市","中学","2434343");
+
+        //System.out.print(sd.insertSchool(s1));
+        //System.out.print(sd.modifyStudent(s1));
+       // System.out.print(sd.getSchool());
+       // System.out.print(sd.getSchoolForProvince("广东省 "));
+        //System.out.print(sd.countSchool());
+   // }
 }

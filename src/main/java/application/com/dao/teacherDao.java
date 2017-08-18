@@ -156,9 +156,34 @@ public class teacherDao {
         return null;
     }
     //教师注册
-
     public boolean teacherRegister(Teacher teacher) {
          return insertTeacher(teacher);
     }
+    //统计教师数量
+    public int countTeacher(){
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select  count(*) from tv_teacher ");
+
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){int sum=rs.getInt(1);
+                return sum;}
+
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        return 0;
+    }
+
+
+//public static void main(String[] args){
+//    teacherDao rd=new teacherDao();
+//    System.out.print(rd.countTeacher());
+//}
+
 
 }
