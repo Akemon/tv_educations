@@ -50,6 +50,7 @@ public class Application {
     //古诗的插入
     @RequestMapping("/insertPoem")
     void insertPoem(HttpServletRequest request,HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String title =request.getParameter("title");
         String poet =request.getParameter("poet");
         String poem =request.getParameter("poem");
@@ -65,7 +66,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,6 +82,7 @@ public class Application {
     //获取一首古诗
     @RequestMapping("/getOnePoem")
     public void getOnePoem(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String poetryIDString =request.getParameter("no");
         System.out.println("no:"+poetryIDString);
         int poetryID=0;
@@ -94,7 +100,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,7 +114,8 @@ public class Application {
 
     //随机获取三首古诗
     @RequestMapping("/getThreePoem")
-    public void getThreePoem(HttpServletResponse response){
+    public void getThreePoem(HttpServletRequest request,HttpServletResponse response){
+        String callback=request.getParameter("callback");
         List<Poetry> poetryList = poetryDao.getThreePoemList();
         JSONArray jsonArray =JSONArray.fromObject(poetryList);
         JSONObject jsonObject =new JSONObject();
@@ -114,7 +125,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,6 +138,7 @@ public class Application {
     //搜索古诗
     @RequestMapping("/searchPoem")
     public void searchPoem(HttpServletRequest request,HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String title =request.getParameter("keyword");
         List<Poetry> poemList =poetryDao.getResearchPoem(title);
         JSONArray jsonArray =JSONArray.fromObject(poemList);
@@ -133,7 +149,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -143,6 +163,7 @@ public class Application {
     //记录结果
     @RequestMapping("/recordScore")
     void recordScore(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String studentIDString =request.getParameter("studentID");
         String poetryIDString =request.getParameter("poetryID");
         int studentID=0;
@@ -163,7 +184,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -180,6 +205,7 @@ public class Application {
     //增加学生信息
     @RequestMapping("/addStudent")
     public void addStudent(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String userName =request.getParameter("userName");
         String userPass =request.getParameter("userPass");
         String schoolIDString =request.getParameter("schoolID");
@@ -201,7 +227,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -209,6 +239,7 @@ public class Application {
     //删除学生信息
     @RequestMapping("/deleteStudent")
     public void deleteStudent(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
             String studentIDString =request.getParameter("studentID");
             int studentID=0;
             if(studentIDString!=null){
@@ -222,7 +253,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -232,6 +267,7 @@ public class Application {
     //修改学生信息
     @RequestMapping("/modifyStudent")
     public void modifyStudent(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String studentIDString =request.getParameter("studentID");
         String schoolIDString =request.getParameter("schoolID");
         String studentNumber =request.getParameter("studentNumber");
@@ -253,7 +289,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -262,6 +302,7 @@ public class Application {
     //搜索学生
     @RequestMapping("/searchStudent")
     public void getOneStudent(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
          String search =request.getParameter("search");
          List<Student> stuList =stuDao.searchStudent(search);
         JSONArray jsonArray =JSONArray.fromObject(stuList);
@@ -272,7 +313,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -281,7 +326,8 @@ public class Application {
 
     //获取所有学生
     @RequestMapping("/getAllStudent")
-    public void getAllStudetn(HttpServletResponse response){
+    public void getAllStudetn(HttpServletRequest request,HttpServletResponse response){
+        String callback=request.getParameter("callback");
         List<Student> stuList =stuDao.getStudent();
         JSONArray jsonArray =JSONArray.fromObject(stuList);
         JSONObject jsonObject =new JSONObject();
@@ -291,7 +337,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -301,6 +351,7 @@ public class Application {
     //根据省份获取学校
     @RequestMapping("getSchoolByProvince")
     public void getSchoolByProvince(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String province =request.getParameter("province");
         List<School> schoolList =schDao.getSchoolForProvince(province);
         JSONArray jsonArray =JSONArray.fromObject(schoolList);
@@ -311,7 +362,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -320,6 +375,7 @@ public class Application {
     //根据省份,学校获取班级
     @RequestMapping("/getClassBySchool")
     public void getClassBySchool(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
             String schoolName =request.getParameter("schoolName");
             String province =request.getParameter("province");
             List<String> ClassList =stuDao.getSchoolGrade(schoolName,province);
@@ -331,7 +387,11 @@ public class Application {
             PrintWriter out = null;
             try {
                 out =response.getWriter();
-                out.println(jsonObject.toString());
+                if(callback!=null){
+                    out.write(callback+"("+jsonObject.toString()+")");
+                }else{
+                    out.write(jsonObject.toString());
+                }
                  } catch (IOException e) {
                     e.printStackTrace();
             }
@@ -340,6 +400,7 @@ public class Application {
     //根据省份，学校，班级获取学生
     @RequestMapping("/getStudentByProvinceSchoolClass")
     public void getStudentByProvinceSchoolClass(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String province =request.getParameter("province");
         String schoolName =request.getParameter("schoolName");
         String gradeName = request.getParameter("gradeName");
@@ -352,7 +413,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -361,6 +426,7 @@ public class Application {
     //学生登陆
     @RequestMapping("/studentLogin")
     public void studentLogin(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String userName =request.getParameter("userName");
         String userPass =request.getParameter("userPass");
         Student student =stuDao.studentLogin(userName,userPass);
@@ -375,7 +441,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -390,6 +460,7 @@ public class Application {
     //增加教师
     @RequestMapping("/addTeacher")
     public void addTeacher(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String userName =request.getParameter("userName");
         String userPass =request.getParameter("userPass");
         String schoolIDString  =request.getParameter("schoolID");
@@ -410,7 +481,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -419,6 +494,7 @@ public class Application {
     //删除教师
     @RequestMapping("/deleteTeacher")
     public void deleteTeacher(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String teacherIDString =request.getParameter("teacherID");
         int teacherID=0;
         if(teacherIDString!=null){
@@ -432,7 +508,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -440,6 +520,7 @@ public class Application {
     //修改教师个人信息
     @RequestMapping("/modifyTeacher")
     public void modifyTeacher(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String teacherIDString =request.getParameter("teacherID");
         String schoolIDString  =request.getParameter("schoolID");
         String teacherNumber =request.getParameter("teacherNumber");
@@ -460,7 +541,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -469,6 +554,7 @@ public class Application {
     //搜索教师
     @RequestMapping("/searchTeacher")
     public void searchTeacher(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String search =request.getParameter("search");
         List<Teacher> teachList =teachDao.searchTeacher(search);
         JSONArray jsonArray =JSONArray.fromObject(teachList);
@@ -479,14 +565,19 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     //获取所有教师
     @RequestMapping("/getAllTeacher")
-    public void getAllTeacher(HttpServletResponse response){
+    public void getAllTeacher(HttpServletRequest request,HttpServletResponse response){
+        String callback=request.getParameter("callback");
         List<Teacher> teacherList =teachDao.getTeacher();
         JSONArray jsonArray =JSONArray.fromObject(teacherList);
         JSONObject jsonObject =new JSONObject();
@@ -496,7 +587,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -505,6 +600,7 @@ public class Application {
     //根据省份,学校获取教师
     @RequestMapping("/getTeacherByProvinceSchool")
     public void getTeacherByProvinceSchool(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String province =request.getParameter("province");
         String schoolName =request.getParameter("schoolName");
         List<Teacher> teacherList =teachDao.getTeacherForSchool(schoolName,province);
@@ -516,7 +612,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -532,6 +632,7 @@ public class Application {
     //增加学校
     @RequestMapping("/addSchool")
     public void addSchool(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String schoolName =request.getParameter("schoolName");
         String schoolProvice =request.getParameter("schoolProvince");
         String schooAddress =request.getParameter("schoolAddress");
@@ -546,7 +647,12 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -554,6 +660,7 @@ public class Application {
     //删除学校
     @RequestMapping("/deleteSchool")
     public void deleteSchool(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String schoolDString =request.getParameter("schoolID");
         int schoolID =0;
         if(schoolDString!=null){
@@ -567,7 +674,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -576,6 +687,7 @@ public class Application {
     //修改学校
     @RequestMapping("/modifySchool")
     public  void modifySchool(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String schoolIDString =request.getParameter("schoolID");
         String schoolName =request.getParameter("schoolName");
         String schoolProvice =request.getParameter("schoolProvince");
@@ -595,7 +707,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -603,7 +719,8 @@ public class Application {
 
     //获取所有学校
     @RequestMapping("/getAllSchool")
-    public void getAllSchool(HttpServletResponse response){
+    public void getAllSchool(HttpServletRequest request,HttpServletResponse response){
+        String callback=request.getParameter("callback");
         List<School> schoolList =schDao.getSchool();
         JSONArray jsonArray =JSONArray.fromObject(schoolList);
         JSONObject jsonObject =new JSONObject();
@@ -613,7 +730,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -622,6 +743,7 @@ public class Application {
     //搜索学校
     @RequestMapping("/searchSchool")
     public void searchSchool(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String search =request.getParameter("search");
         List<School> schoolList =schDao.getSchoolForName(search);
         JSONArray jsonArray =JSONArray.fromObject(schoolList);
@@ -632,7 +754,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -645,6 +771,7 @@ public class Application {
     //管理员登陆
     @RequestMapping("/adminLogin")
     public void adminLogin(HttpServletRequest request, HttpServletResponse response){
+        String callback=request.getParameter("callback");
         String adminName =request.getParameter("adminName");
         String adminPass =request.getParameter("adminPass");
         boolean flag =adDao.login(adminName,adminPass);
@@ -655,7 +782,11 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -666,7 +797,8 @@ public class Application {
 
     //统计的映射
     @RequestMapping("/getAllUserNum")
-    public void studentNumber(HttpServletResponse response){
+    public void studentNumber(HttpServletRequest request,HttpServletResponse response){
+        String callback=request.getParameter("callback");
         int studentNum =stuDao.countStudent();
         int schoolNum =schDao.countSchool();
         int teacherNum =teachDao.countTeacher();
@@ -678,7 +810,34 @@ public class Application {
         PrintWriter out = null;
         try {
             out =response.getWriter();
-            out.println(jsonObject.toString());
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //统计所有省份的用户数量
+    @RequestMapping("/getAllUserByProvince")
+    public void getAllUserByProvince(HttpServletRequest request,HttpServletResponse response){
+        String callback=request.getParameter("callback");
+        List<NumberProvice> NumberList =new NumberProviceDao().countNumberProvince();
+        JSONArray jsonArray =JSONArray.fromObject(NumberList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("NumberList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

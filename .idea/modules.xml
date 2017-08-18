@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$USER_HOME$/Documents/WeChat Files/z1404257522/Files/newmedia-master-49ad4f6f5ecb1b91569d954218990afbec838364/newmedia-interface/src/main/main.iml" filepath="$USER_HOME$/Documents/WeChat Files/z1404257522/Files/newmedia-master-49ad4f6f5ecb1b91569d954218990afbec838364/newmedia-interface/src/main/main.iml" />
+      <module fileurl="file://$USER_HOME$/Documents/WeChat Files/z1404257522/Files/newmedia-master-49ad4f6f5ecb1b91569d954218990afbec838364/newmedia-admin/src/main/main1.iml" filepath="$USER_HOME$/Documents/WeChat Files/z1404257522/Files/newmedia-master-49ad4f6f5ecb1b91569d954218990afbec838364/newmedia-admin/src/main/main1.iml" />
       <module fileurl="file://$PROJECT_DIR$/tv_education.iml" filepath="$PROJECT_DIR$/tv_education.iml" />
     </modules>
   </component>
