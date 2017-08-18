@@ -111,7 +111,7 @@ public class schoolDao {
     //根据学校名字搜索
     public List getSchoolForName(String schoolname){
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_school where schoolName= ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_school where schoolName LIKE ?");
             preparedStatement.setString(1,"%"+schoolname+"%");
             ResultSet rs = preparedStatement.executeQuery();
 
