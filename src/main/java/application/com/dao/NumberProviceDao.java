@@ -18,7 +18,7 @@ public class NumberProviceDao {
         for(int i=0;i<34;i++){
             NumberProvice np=new NumberProvice(province[i],sd.countNumberProvice().get(i).getPeopleNumber()+ td.countNumberProvice().get(i).getPeopleNumber());
             System.out.println(np.getProvince()+":"+np.getPeopleNumber());
-
+            ls.add(np);
     }
 
     return ls;
@@ -32,6 +32,29 @@ public class NumberProviceDao {
 
 
     //找出省份前四名
+    public List<NumberProvice> listNumberProvince() {
+      NumberProviceDao numberProvice=new NumberProviceDao();
+      List<NumberProvice> count=numberProvice.countNumberProvince();
+
+        List<NumberProvice> Alist = new ArrayList<NumberProvice>();
+
+//        for (int i = 0; i < 34; i++) {
+//            NumberProvice np = new NumberProvice(province[i], sd.countNumberProvice().get(i).getPeopleNumber() + td.countNumberProvice().get(i).getPeopleNumber());
+//            System.out.println(np.getProvince() + ":" + np.getPeopleNumber());
+//
+//        }
+        for(int i=0;i<4;i++){
+            NumberProvice np=count.get(i);
+
+            for(int j=i+1;j<=34;j++){
+                  if(count.get(j).getPeopleNumber()>np.getPeopleNumber()){np=count.get(j);}
+            }
+
+
+        }
+
+        return Alist;
+    }
 
 
     public static void main(String[] args) {
