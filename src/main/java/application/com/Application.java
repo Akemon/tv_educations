@@ -244,7 +244,7 @@ public class Application {
             studentID =Integer.parseInt(studentIDString);
             schoolID =Integer.parseInt(schoolIDString);
         }
-        Student student =new Student(schoolID,studentNumber,studentName,studentGrade,schoolID,studentPhone);
+        Student student =new Student(studentID,studentNumber,studentName,studentGrade,schoolID,studentPhone);
         boolean flag =stuDao.modifyStudent(student);
         String str = "{\"flag\":\""+flag+"\"}";
         JSONObject jsonObject = JSONObject.fromObject(str);
@@ -365,6 +365,7 @@ public class Application {
         String userPass =request.getParameter("userPass");
         Student student =stuDao.studentLogin(userName,userPass);
         List<Student> studentList =new ArrayList<Student>();
+        System.out.println(studentList);
         studentList.add(student);
         JSONArray jsonArray =JSONArray.fromObject(studentList);
         JSONObject jsonObject =new JSONObject();
@@ -660,6 +661,28 @@ public class Application {
         }
     }
 
+
+    //  #############################################################
+
+    //统计的映射
+    @RequestMapping("/getAllUserNum")
+    public void studentNumber(HttpServletResponse response){
+        int studentNum =stuDao.countStudent();
+        int schoolNum =schDao.countSchool();
+        int teacherNum =teachDao.countTeacher();
+        int totalUserNum =studentNum+schoolNum+teacherNum;
+        String str = "{\"studentNum\":\""+studentNum+"\",\"schoolNum\":\""+schoolNum+"\",\"teacherNum\":\""+teacherNum+"\",\"totalUserNum\":\""+totalUserNum+"\"}";
+        JSONObject jsonObject = JSONObject.fromObject(str);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            out.println(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
