@@ -17,6 +17,24 @@ public class Student {
         return userName;
     }
 
+    public Student(Integer studentid, String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone,String schoolname) {
+        this.studentid = studentid;
+        this.studentnunber = studentnunber;
+        this.studentname = studentname;
+        this.studentgrade = studentgrade;
+        this.schoolid = schoolid;
+        this.studentphone = studentphone;
+        this.schoolname=schoolname;
+    }
+
+    public String getSchoolname() {
+        return schoolname;
+    }
+
+    public void setSchoolname(String schoolname) {
+        this.schoolname = schoolname;
+    }
+
     public Student(String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone, String userName, String userPass) {
         this.studentnunber = studentnunber;
         this.studentname = studentname;
@@ -101,13 +119,5 @@ public class Student {
         this.schoolid = schoolid;
         this.studentphone = studentphone;
     }
-    public Student(Integer studentid, String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone,String schoolname) {
-        this.studentid = studentid;
-        this.studentnunber = studentnunber;
-        this.studentname = studentname;
-        this.studentgrade = studentgrade;
-        this.schoolid = schoolid;
-        this.studentphone = studentphone;
-        this.schoolname=schoolname;
-    }
+
 }

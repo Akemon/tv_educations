@@ -172,9 +172,10 @@ public class studentDao {
             preparedStatement.setString(1, userName);
             preparedStatement.setString(2, userPass);
             ResultSet rs = preparedStatement.executeQuery();
-            System.out.print("eqq:" + rs);
+
             if (rs.next()) {
                 Student student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"), rs.getString("schoolName"));
+
                 return student;
             }
         } catch (SQLException e) {
@@ -207,18 +208,18 @@ public class studentDao {
 
       return 0;
     }
-   // public static void main(String[] args){
-      //  studentDao sd=new studentDao();
+    public static void main(String[] args){
+       studentDao sd=new studentDao();
        // System.out.print(sd.searchStudent("冯").get(0).getStudentname());
 //
        // Student s1=new Student( "11245533",  "柳而蛋",  "初一二班",  1,  "1224354434232","www","123" );
       //  sd.insertStudent(s1);
-        //System.out.print(sd.getStudent().get(1).getStudentname());
+        System.out.print(sd.studentLogin("fwz","123").getSchoolname());
         //System.out.print(sd.modifyStudent(s1));
         //sd.delStudent(2);
         //System.out.print(sd.getStudent().get(1).getStudentname());
 
        // System.out.print(sd.countStudent());
-  //  }
+   }
 
 }
