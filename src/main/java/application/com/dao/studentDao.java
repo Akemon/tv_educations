@@ -1,6 +1,7 @@
 package application.com.dao;
 
 
+import application.com.bean.NumberProvice;
 import application.com.bean.Student;
 
 import java.sql.Connection;
@@ -208,13 +209,43 @@ public class studentDao {
 
       return 0;
     }
+
+    //按照省份统计学生数量
+    public List<NumberProvice> countNumberProvice(){
+         String[] province={"北京市","天津市","上海市","重庆市","河北省","山西省","辽宁省","吉林省","黑龙江省","江苏省","浙江省","安徽省","福建省","江西省","山东省","河南省","湖北省","湖南省","广东省","海南省","四川省","贵州省","云南省","陕西省","甘肃省","青海省","台湾省","内蒙古自治区","广西壮族自治区","西藏自治区","宁夏回族自治区","新疆维吾尔自治区","香港特别行政区","澳门特别行政区"} ;
+        List<NumberProvice> NumberProvice=new ArrayList<NumberProvice>();
+        for(int i=0;i<34;i++){
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement("select  count(*) from tv_student LEFT join tv_school on tv_student.schoolID=tv_school.schoolID where schoolProvince= ?");
+                preparedStatement.setString(1, province[i]);
+                //preparedStatement.setString(1,"广东省");
+                ResultSet rs = preparedStatement.executeQuery();
+                if(rs.next()){int sum=rs.getInt(1);
+                System.out.print("省份："+sum);
+                    NumberProvice np=new NumberProvice(province[i],sum);
+                    NumberProvice.add(np);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+            }
+        }
+
+        return NumberProvice;
+    }
+
+
+
+
+
+
     public static void main(String[] args){
        studentDao sd=new studentDao();
        // System.out.print(sd.searchStudent("冯").get(0).getStudentname());
 //
        // Student s1=new Student( "11245533",  "柳而蛋",  "初一二班",  1,  "1224354434232","www","123" );
       //  sd.insertStudent(s1);
-        System.out.print(sd.studentLogin("fwz","123").getSchoolname());
+        System.out.print(sd.countNumberProvice());
         //System.out.print(sd.modifyStudent(s1));
         //sd.delStudent(2);
         //System.out.print(sd.getStudent().get(1).getStudentname());
