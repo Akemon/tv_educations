@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -173,7 +174,7 @@ public class Application {
             poetryID =Integer.parseInt(poetryIDString);
         }
         String score =request.getParameter("score");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String time =  format.format(new Date());
         Record record =new Record(studentID,poetryID,score,time);
         boolean flag =poetryDao.recordScore(record);
@@ -192,8 +193,28 @@ public class Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-
+    @RequestMapping("/getSevenDayAverageScore")
+    public void getSevenDayAverageScore(HttpServletRequest request,HttpServletResponse response){
+        String callback=request.getParameter("callback");
+        List<Record> recordList =poetryDao.getSevenDayData();
+        JSONArray jsonArray =JSONArray.fromObject(recordList);
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("recordList", jsonArray);
+        System.out.println(jsonObject.toString());
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out =response.getWriter();
+            if(callback!=null){
+                out.write(callback+"("+jsonObject.toString()+")");
+            }else{
+                out.write(jsonObject.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     //  #############################################################
 
@@ -374,6 +395,7 @@ public class Application {
 
     //根据省份,学校获取班级
     @RequestMapping("/getClassBySchool")
+
     public void getClassBySchool(HttpServletRequest request, HttpServletResponse response){
         String callback=request.getParameter("callback");
             String schoolName =request.getParameter("schoolName");
