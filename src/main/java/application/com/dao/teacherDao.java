@@ -147,7 +147,7 @@ public class teacherDao {
             ResultSet rs = preparedStatement.executeQuery();
             System.out.print("eqq:" + rs);
             if (rs.next()) {
-                Teacher teacher = new Teacher(rs.getInt("teacherID"), rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"));
+                Teacher teacher = new Teacher(rs.getInt("teacherID"), rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"),rs.getString("schoolName"));
                 return teacher;
             }
         } catch (SQLException e) {

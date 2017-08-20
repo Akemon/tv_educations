@@ -11,6 +11,26 @@ public class Teacher {
 
     private String teacherphone;
 
+    private String schoolName;
+
+    public Teacher(Integer teacherid, String teachernumber, String teachername, Integer schoolid, String teacherphone,String schoolName) {
+        this.teacherid = teacherid;
+        this.teachernumber = teachernumber;
+        this.teachername = teachername;
+        this.schoolid = schoolid;
+        this.teacherphone = teacherphone;
+        this.schoolName = schoolName;
+
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
     public String getUserName() {
         return userName;
     }
