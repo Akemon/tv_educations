@@ -104,12 +104,12 @@ public class studentDao {
     //获取所有学生
     public List<Student> getStudent() {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student ");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_student,tv_school where tv_student.schoolID=tv_school.schoolID");
 
             ResultSet rs = preparedStatement.executeQuery();
             List<Student> students = new ArrayList<Student>();
             while (rs.next()) {
-                Student student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"));
+                Student student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"), rs.getString("schoolName"));
                 students.add(student);
             }
             return students;
@@ -245,8 +245,8 @@ public class studentDao {
 //
        // Student s1=new Student( "11245533",  "柳而蛋",  "初一二班",  1,  "1224354434232","www","123" );
       //  sd.insertStudent(s1);
-        System.out.print(sd.countNumberProvice());
-        //System.out.print(sd.modifyStudent(s1));
+        //System.out.print(sd.countNumberProvice());
+        System.out.print(sd.studentLogin("fwz","123").getSchoolname());
         //sd.delStudent(2);
         //System.out.print(sd.getStudent().get(1).getStudentname());
 

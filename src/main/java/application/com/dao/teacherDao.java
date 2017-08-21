@@ -98,12 +98,12 @@ public class teacherDao {
     //获取所有教师
     public List<Teacher> getTeacher(){
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher ");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_teacher,tv_school where tv_teacher.schoolID=tv_school.schoolID ");
 
             ResultSet rs = preparedStatement.executeQuery();
             List<Teacher> teachers=new ArrayList<Teacher>();
             while (rs.next()) {
-                Teacher teacher = new Teacher(rs.getInt("teacherID"), rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"));
+                Teacher teacher = new Teacher(rs.getInt("teacherID"), rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"),rs.getString("schoolName"));
                 teachers.add(teacher);
             }
             return teachers;
@@ -124,7 +124,7 @@ public class teacherDao {
             ResultSet rs = preparedStatement.executeQuery();
             List<Teacher> teachers=new ArrayList<Teacher>();
             while (rs.next()) {
-                Teacher teacher = new Teacher(rs.getInt("teacherID"), rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"));
+                Teacher teacher = new Teacher(rs.getInt("teacherID"), rs.getString("teacherNumber"), rs.getString("teacherName"), rs.getInt("schoolID"), rs.getString("teacherPhone"),rs.getString("schoolName"));
                 teachers.add(teacher);
             }
             return teachers;
