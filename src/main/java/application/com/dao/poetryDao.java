@@ -85,9 +85,11 @@ public class poetryDao {
                 String poet = rs.getString(3);
                 String poem = rs.getString(4);
                 System.out.print(poem);
-                String[] p=poem.split("/");
 
-                Poetry poe = new Poetry(poeID, titleNew, poet, p);
+                String[] p=poem.split("/");
+                String temp=p[0]+"，/\n"+p[1]+"。\n"+p[2]+"，\n"+p[3]+"。";
+
+                Poetry poe = new Poetry(poeID, titleNew, poet, temp);
                 list.add(poe);
             }
         } catch (SQLException e) {
