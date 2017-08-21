@@ -1,5 +1,7 @@
 package application.com.bean;
 
+import java.util.Date;
+
 public class Student {
     private Integer studentid;
 
@@ -12,12 +14,21 @@ public class Student {
     private Integer schoolid;
 
     private String schoolname;
+    private int schoolHoliday;
+
+    public int getSchoolHoliday() {
+        return schoolHoliday;
+    }
+
+    public void setSchoolHoliday(int schoolHoliday) {
+        this.schoolHoliday = schoolHoliday;
+    }
 
     public String getUserName() {
         return userName;
     }
 
-    public Student(Integer studentid, String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone,String schoolname) {
+    public Student(Integer studentid, String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone,String schoolname,int schoolHoliday) {
         this.studentid = studentid;
         this.studentnunber = studentnunber;
         this.studentname = studentname;
@@ -25,6 +36,18 @@ public class Student {
         this.schoolid = schoolid;
         this.studentphone = studentphone;
         this.schoolname=schoolname;
+        this.schoolHoliday=schoolHoliday;
+    }
+
+    public Student(Integer studentid, String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone, String schoolname) {
+        this.studentid = studentid;
+        this.studentnunber = studentnunber;
+        this.studentname = studentname;
+        this.studentgrade = studentgrade;
+        this.schoolid = schoolid;
+        this.schoolname = schoolname;
+        this.studentphone = studentphone;
+
     }
 
     public String getSchoolname() {

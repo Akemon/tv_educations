@@ -8,7 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class studentDao {
@@ -175,7 +178,7 @@ public class studentDao {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                Student student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"), rs.getString("schoolName"));
+                Student student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"), rs.getString("schoolName"),rs.getInt("schoolHoliday"));
 
                 return student;
             }
@@ -239,14 +242,18 @@ public class studentDao {
 
 
 
-    public static void main(String[] args){
-       studentDao sd=new studentDao();
+    public static void main(String[] args) throws ParseException {
+       //studentDao sd=new studentDao();
+        Date date =new Date();
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+        long todayTime =df.parse(df.format(date)).getTime();
+        System.out.println(todayTime);
        // System.out.print(sd.searchStudent("冯").get(0).getStudentname());
 //
        // Student s1=new Student( "11245533",  "柳而蛋",  "初一二班",  1,  "1224354434232","www","123" );
       //  sd.insertStudent(s1);
         //System.out.print(sd.countNumberProvice());
-        System.out.print(sd.studentLogin("fwz","123").getSchoolname());
+        //System.out.print(sd.studentLogin("fwz","123").getSchoolname());
         //sd.delStudent(2);
         //System.out.print(sd.getStudent().get(1).getStudentname());
 
