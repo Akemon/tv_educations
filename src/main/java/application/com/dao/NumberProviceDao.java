@@ -35,18 +35,17 @@ public class NumberProviceDao {
 
     //找出省份前四名
     public List<NumberProvice> listNumberProvince() {
-     // NumberProviceDao numberProvice=new NumberProviceDao();
-     // List<NumberProvice> count=numberProvice.countNumberProvince();
-       NumberProvice n1=new NumberProvice("qwe",2) ;
-       NumberProvice n2=new NumberProvice("asd",1);
-       NumberProvice n3=new NumberProvice("zxc",3);
+      NumberProviceDao numberProvice=new NumberProviceDao();
+     List<NumberProvice> count=numberProvice.countNumberProvince();
+       //NumberProvice n1=new NumberProvice("qwe",2) ;
+      // NumberProvice n2=new NumberProvice("asd",1);
 
-       List<NumberProvice> Alist = new ArrayList<NumberProvice>();
-Alist.add(n1);
-Alist.add(n2);
-Alist.add(n3);
+      // List<NumberProvice> Alist = new ArrayList<NumberProvice>();
+//Alist.add(n1);
+//Alist.add(n2);
+//Alist.add(n3);
 
-        Collections.sort(Alist,new Comparator<NumberProvice>(){
+        Collections.sort(count,new Comparator<NumberProvice>(){
             public int compare(NumberProvice o1, NumberProvice o2){
                 if(o1.getPeopleNumber() < o2.getPeopleNumber()){
                     return 1;
@@ -59,7 +58,7 @@ Alist.add(n3);
         });
 
 
-        return Alist;
+        return count;
     }
 
 
