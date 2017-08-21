@@ -6,6 +6,15 @@ public class Poetry {
     private String title;
 
     private String poet;
+    private String[] poem2;
+
+    public String[] getPoem2() {
+        return poem2;
+    }
+
+    public void setPoem2(String[] poem2) {
+        this.poem2 = poem2;
+    }
 
     public Poetry(Integer poetryid, String title, String poet, String poem) {
         this.poetryid = poetryid;
@@ -13,6 +22,14 @@ public class Poetry {
         this.poet = poet;
         this.poem = poem;
     }
+
+    public Poetry(Integer poetryid, String title, String poet, String[] poem) {
+        this.poetryid = poetryid;
+        this.title = title;
+        this.poet =poet;
+        this.poem2 = poem;
+    }
+
 
     public Poetry() {
     }

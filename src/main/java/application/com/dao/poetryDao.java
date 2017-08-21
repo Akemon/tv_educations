@@ -84,7 +84,10 @@ public class poetryDao {
                 String titleNew = rs.getString(2);
                 String poet = rs.getString(3);
                 String poem = rs.getString(4);
-                Poetry poe = new Poetry(poeID, titleNew, poet, poem);
+                System.out.print(poem);
+                String[] p=poem.split("/");
+
+                Poetry poe = new Poetry(poeID, titleNew, poet, p);
                 list.add(poe);
             }
         } catch (SQLException e) {
@@ -187,7 +190,7 @@ public class poetryDao {
     }
 
        public static void main(String args[]){
-        new poetryDao().testAverageList();
+        new poetryDao().getResearchPoem("忆");
     }
 
 
