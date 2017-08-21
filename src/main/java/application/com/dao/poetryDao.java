@@ -78,7 +78,7 @@ public class poetryDao {
         List<Poetry> list = new ArrayList<Poetry>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT  * from tv_poetry WHERE title like '%" + title + "%' LIMIT 5");
+            ResultSet rs = statement.executeQuery("SELECT  * from tv_poetry WHERE title like '%" + title + "%' ");
             while (rs.next()) {
                 int poeID = rs.getInt(1);
                 String titleNew = rs.getString(2);
@@ -88,7 +88,7 @@ public class poetryDao {
 
                 String[] p=poem.split("/");
                 String temp="";
-                for(int i=0;i<4&&i<p.length;i++) {
+                for(int i=0;i<p.length;i++) {
                     temp = temp + p[i];
                     if ((i + 1) % 2 == 0) {
                         temp = temp + "。\n";
