@@ -3,6 +3,7 @@ package application.com.dao;
 
 import application.com.bean.NumberProvice;
 import application.com.bean.Student;
+import ch.qos.logback.classic.pattern.SyslogStartConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -178,7 +179,17 @@ public class studentDao {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                Student student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"), rs.getString("schoolName"),rs.getInt("schoolHoliday"));
+                Date date =new Date();
+                SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+                String res="";
+                try {
+                    long todayTime = df.parse(df.format(date)).getTime();
+                    long holidayTime = df.parse(df.format(rs.getDate("schoolHoliday"))).getTime();
+                    res=(holidayTime-todayTime)/(24*3600*1000)+"";
+                    System.out.println(res);
+                }catch(ParseException e){e.printStackTrace();}
+
+                Student student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"), rs.getString("schoolName"),res);
 
                 return student;
             }
@@ -242,12 +253,12 @@ public class studentDao {
 
 
 
-    public static void main(String[] args) throws ParseException {
-       //studentDao sd=new studentDao();
-        Date date =new Date();
-        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-        long todayTime =df.parse(df.format(date)).getTime();
-        System.out.println(todayTime);
+    public static void main(String[] args)   {
+      // studentDao sd=new studentDao();
+      // sd.studentLogin("fwz","123");
+      // sd.studentLogin("sat","123");
+
+
        // System.out.print(sd.searchStudent("冯").get(0).getStudentname());
 //
        // Student s1=new Student( "11245533",  "柳而蛋",  "初一二班",  1,  "1224354434232","www","123" );

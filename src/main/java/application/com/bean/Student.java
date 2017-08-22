@@ -14,13 +14,13 @@ public class Student {
     private Integer schoolid;
 
     private String schoolname;
-    private int schoolHoliday;
+    private String schoolHoliday;
 
-    public int getSchoolHoliday() {
+    public String getSchoolHoliday() {
         return schoolHoliday;
     }
 
-    public void setSchoolHoliday(int schoolHoliday) {
+    public void setSchoolHoliday(String schoolHoliday) {
         this.schoolHoliday = schoolHoliday;
     }
 
@@ -28,7 +28,7 @@ public class Student {
         return userName;
     }
 
-    public Student(Integer studentid, String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone,String schoolname,int schoolHoliday) {
+    public Student(Integer studentid, String studentnunber, String studentname, String studentgrade, Integer schoolid, String studentphone,String schoolname,String schoolHoliday) {
         this.studentid = studentid;
         this.studentnunber = studentnunber;
         this.studentname = studentname;
