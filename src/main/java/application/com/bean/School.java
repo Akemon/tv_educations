@@ -15,13 +15,13 @@ public class School {
 
     private String schoolphone;
 
-    private Date schoolHoliday;
+    private String schoolHoliday;
 
-    public Date getSchoolHoliday() {
+    public String getSchoolHoliday() {
         return schoolHoliday;
     }
 
-    public void setSchoolHoliday(Date schoolHoliday) {
+    public void setSchoolHoliday(String schoolHoliday) {
         this.schoolHoliday = schoolHoliday;
     }
 
@@ -73,7 +73,7 @@ public class School {
         this.schoolphone = schoolphone == null ? null : schoolphone.trim();
     }
 
-    public School(String schoolname, String schoolprovince, String schooladdress, String schooltype, String schoolphone,Date schoolHoliday) {
+    public School(String schoolname, String schoolprovince, String schooladdress, String schooltype, String schoolphone,String schoolHoliday) {
         this.schoolname = schoolname;
         this.schoolprovince = schoolprovince;
         this.schooladdress = schooladdress;
@@ -82,7 +82,7 @@ public class School {
         this.schoolHoliday=schoolHoliday;
     }
 
-    public School(Integer schoolid, String schoolname, String schoolprovince, String schooladdress, String schooltype, String schoolphone,Date schoolHoliday) {
+    public School(Integer schoolid, String schoolname, String schoolprovince, String schooladdress, String schooltype, String schoolphone,String schoolHoliday) {
         this.schoolid = schoolid;
         this.schoolname = schoolname;
         this.schoolprovince = schoolprovince;

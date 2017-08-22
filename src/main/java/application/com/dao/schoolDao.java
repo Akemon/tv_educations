@@ -5,6 +5,8 @@ import application.com.bean.School;
 import application.com.bean.Teacher;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +23,17 @@ public class schoolDao {
             preparedStatement.setString(3,school.getSchooladdress());
             preparedStatement.setString(4,school.getSchooltype());
             preparedStatement.setString(5,school.getSchoolphone());
-            preparedStatement.setDate(6, (Date) school.getSchoolHoliday());
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date  date = sdf.parse(school.getSchoolHoliday());
+                preparedStatement.setDate(6, (Date) date);
             preparedStatement.executeUpdate();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }catch (ParseException e2){
+        e2.printStackTrace();
         }
         return false;
     }
@@ -50,7 +58,7 @@ public class schoolDao {
         return false;
     }
     //修改学校信息
-    public boolean modifyStudent(School school){
+    public boolean modifyStudent(School school) throws ParseException {
         try{
             PreparedStatement preparedStatement =connection.prepareStatement("update tv_school set schoolName=?, schoolProvince=?,schoolAddress=?,schoolType=?,schoolPhone=?,schoolHoliday=? where schoolID= ?");
             preparedStatement.setString(1,school.getSchoolname());
@@ -59,7 +67,11 @@ public class schoolDao {
             preparedStatement.setString(4,school.getSchooltype());
             preparedStatement.setString(5,school.getSchoolphone());
             preparedStatement.setInt(6,school.getSchoolid());
-            preparedStatement.setDate(7, (Date) school.getSchoolHoliday());
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date  date = sdf.parse(school.getSchoolHoliday());
+                preparedStatement.setDate(7, (Date) date);
+            }catch(ParseException e){e.printStackTrace();}
             preparedStatement.executeUpdate();
             return true;
         }catch (SQLException e){
@@ -68,14 +80,15 @@ public class schoolDao {
         return false;
     }
     //获取所有学校
-    public List getSchool(){
+    public List<School> getSchool(){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_school ");
 
             ResultSet rs = preparedStatement.executeQuery();
             List<School> schools=new ArrayList<School>();
             while (rs.next()) {
-                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"),rs.getDate("schoolHoliday"));
+                String temp=rs.getDate("schoolHoliday")+"";
+                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"),temp);
                 schools.add(school);
             }
             return schools;
@@ -96,7 +109,8 @@ public class schoolDao {
 
             List<School> schools=new ArrayList<School>();
             while (rs.next()) {
-                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"),rs.getDate("schoolHoliday"));
+                String temp=rs.getDate("schoolHoliday")+"";
+                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"),temp);
                 schools.add(school);
             }
             return schools;
@@ -109,7 +123,7 @@ public class schoolDao {
 
     }
     //根据学校名字搜索
-    public List getSchoolForName(String schoolname){
+    public List<School> getSchoolForName(String schoolname){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from tv_school where schoolName LIKE ?");
             preparedStatement.setString(1,"%"+schoolname+"%");
@@ -117,7 +131,8 @@ public class schoolDao {
 
             List<School> schools=new ArrayList<School>();
             while (rs.next()) {
-                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"),rs.getDate("schoolHoliday"));
+                String temp=rs.getDate("schoolHoliday")+"";
+                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"),temp);
 
 
                 schools.add(school);
@@ -153,14 +168,14 @@ public class schoolDao {
 
    }
 
-  //  public static  void main(String[] args){
-       // schoolDao sd=new schoolDao();
+   public static  void main(String[] args){
+       schoolDao sd=new schoolDao();
       //  School s1=new School(2,"深圳高级实验中学","广东省","深圳市","中学","2434343");
-
+      //System.out.print(sd.getSchool().get(0).getSchoolHoliday());
         //System.out.print(sd.insertSchool(s1));
         //System.out.print(sd.modifyStudent(s1));
        // System.out.print(sd.getSchool());
        // System.out.print(sd.getSchoolForProvince("广东省 "));
         //System.out.print(sd.countSchool());
-   // }
+   }
 }

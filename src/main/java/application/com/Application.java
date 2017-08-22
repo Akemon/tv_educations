@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -660,7 +661,8 @@ public class Application {
         String schooAddress =request.getParameter("schoolAddress");
         String schoolType =request.getParameter("schoolType");
         String schoolPhone =request.getParameter("schoolPhone");
-        School school =new School(schoolName,schoolProvice,schooAddress,schoolType,schoolPhone);
+        String schoolHoliday=request.getParameter("schoolHoliday");
+        School school =new School(schoolName,schoolProvice,schooAddress,schoolType,schoolPhone,schoolHoliday);
         boolean flag =schDao.insertSchool(school);
         String str = "{\"flag\":\""+flag+"\"}";
         JSONObject jsonObject = JSONObject.fromObject(str);
@@ -716,12 +718,18 @@ public class Application {
         String schoolAddress =request.getParameter("schoolAddress");
         String schoolType =request.getParameter("schoolType");
         String schoolPhone =request.getParameter("schoolPhone");
+        String schoolHoliday=request.getParameter("schoolHoliday");
         int schoolID =0;
         if(schoolIDString!=null){
             schoolID =Integer.parseInt(schoolIDString);
         }
-        School school =new School(schoolID,schoolName,schoolProvice,schoolAddress,schoolType,schoolPhone);
-        boolean flag =schDao.modifyStudent(school);
+        School school =new School(schoolID,schoolName,schoolProvice,schoolAddress,schoolType,schoolPhone,schoolHoliday);
+        boolean flag = false;
+        try {
+            flag = schDao.modifyStudent(school);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         String str = "{\"flag\":\""+flag+"\"}";
         JSONObject jsonObject = JSONObject.fromObject(str);
         System.out.println(jsonObject.toString());
