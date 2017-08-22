@@ -73,12 +73,13 @@ public class School {
         this.schoolphone = schoolphone == null ? null : schoolphone.trim();
     }
 
-    public School(String schoolname, String schoolprovince, String schooladdress, String schooltype, String schoolphone) {
+    public School(String schoolname, String schoolprovince, String schooladdress, String schooltype, String schoolphone,Date schoolHoliday) {
         this.schoolname = schoolname;
         this.schoolprovince = schoolprovince;
         this.schooladdress = schooladdress;
         this.schooltype = schooltype;
         this.schoolphone = schoolphone;
+        this.schoolHoliday=schoolHoliday;
     }
 
     public School(Integer schoolid, String schoolname, String schoolprovince, String schooladdress, String schooltype, String schoolphone,Date schoolHoliday) {
