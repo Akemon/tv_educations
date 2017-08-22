@@ -3,12 +3,16 @@ package application.com.dao;
 
 import application.com.bean.NumberProvice;
 import application.com.bean.Student;
+import ch.qos.logback.classic.pattern.SyslogStartConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class studentDao {
@@ -175,7 +179,17 @@ public class studentDao {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                Student student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"), rs.getString("schoolName"));
+                Date date =new Date();
+                SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+                String res="";
+                try {
+                    long todayTime = df.parse(df.format(date)).getTime();
+                    long holidayTime = df.parse(df.format(rs.getDate("schoolHoliday"))).getTime();
+                    res=(holidayTime-todayTime)/(24*3600*1000)+"";
+                    System.out.println(res);
+                }catch(ParseException e){e.printStackTrace();}
+
+                Student student = new Student(rs.getInt("studentID"), rs.getString("studentNunber"), rs.getString("studentName"), rs.getString("studentGrade"), rs.getInt("schoolID"), rs.getString("studentPhone"), rs.getString("schoolName"),res);
 
                 return student;
             }
@@ -239,14 +253,18 @@ public class studentDao {
 
 
 
-    public static void main(String[] args){
-       studentDao sd=new studentDao();
+    public static void main(String[] args)   {
+      // studentDao sd=new studentDao();
+      // sd.studentLogin("fwz","123");
+      // sd.studentLogin("sat","123");
+
+
        // System.out.print(sd.searchStudent("冯").get(0).getStudentname());
 //
        // Student s1=new Student( "11245533",  "柳而蛋",  "初一二班",  1,  "1224354434232","www","123" );
       //  sd.insertStudent(s1);
         //System.out.print(sd.countNumberProvice());
-        System.out.print(sd.studentLogin("fwz","123").getSchoolname());
+        //System.out.print(sd.studentLogin("fwz","123").getSchoolname());
         //sd.delStudent(2);
         //System.out.print(sd.getStudent().get(1).getStudentname());
 

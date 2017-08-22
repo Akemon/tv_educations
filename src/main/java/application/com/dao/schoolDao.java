@@ -1,12 +1,10 @@
 package application.com.dao;
-import java.sql.Connection;
+import java.sql.*;
+
 import application.com.bean.School;
 import application.com.bean.Teacher;
 
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +15,13 @@ public class schoolDao {
 
         try {
 
-            PreparedStatement preparedStatement =connection.prepareStatement("INSERT  into tv_school(schoolName,schoolProvince,schoolAddress,schoolType,schoolPhone) VALUES (?,?,?,?,?)");
+            PreparedStatement preparedStatement =connection.prepareStatement("INSERT  into tv_school(schoolName,schoolProvince,schoolAddress,schoolType,schoolPhone,schoolHoliday) VALUES (?,?,?,?,?,?)");
             preparedStatement.setString(1,school.getSchoolname());
             preparedStatement.setString(2,school.getSchoolprovince());
             preparedStatement.setString(3,school.getSchooladdress());
             preparedStatement.setString(4,school.getSchooltype());
             preparedStatement.setString(5,school.getSchoolphone());
+            preparedStatement.setDate(6, (Date) school.getSchoolHoliday());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -53,13 +52,14 @@ public class schoolDao {
     //修改学校信息
     public boolean modifyStudent(School school){
         try{
-            PreparedStatement preparedStatement =connection.prepareStatement("update tv_school set schoolName=?, schoolProvince=?,schoolAddress=?,schoolType=?,schoolPhone=? where schoolID= ?");
+            PreparedStatement preparedStatement =connection.prepareStatement("update tv_school set schoolName=?, schoolProvince=?,schoolAddress=?,schoolType=?,schoolPhone=?,schoolHoliday=? where schoolID= ?");
             preparedStatement.setString(1,school.getSchoolname());
             preparedStatement.setString(2,school.getSchoolprovince());
             preparedStatement.setString(3,school.getSchooladdress());
             preparedStatement.setString(4,school.getSchooltype());
             preparedStatement.setString(5,school.getSchoolphone());
             preparedStatement.setInt(6,school.getSchoolid());
+            preparedStatement.setDate(7, (Date) school.getSchoolHoliday());
             preparedStatement.executeUpdate();
             return true;
         }catch (SQLException e){
@@ -75,7 +75,7 @@ public class schoolDao {
             ResultSet rs = preparedStatement.executeQuery();
             List<School> schools=new ArrayList<School>();
             while (rs.next()) {
-                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"));
+                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"),rs.getDate("schoolHoliday"));
                 schools.add(school);
             }
             return schools;
@@ -96,7 +96,7 @@ public class schoolDao {
 
             List<School> schools=new ArrayList<School>();
             while (rs.next()) {
-                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"));
+                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"),rs.getDate("schoolHoliday"));
                 schools.add(school);
             }
             return schools;
@@ -117,7 +117,9 @@ public class schoolDao {
 
             List<School> schools=new ArrayList<School>();
             while (rs.next()) {
-                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"));
+                School school = new School(rs.getInt("schoolID"), rs.getString("schoolName"), rs.getString("schoolProvince"), rs.getString("schoolAddress"), rs.getString("schoolType"), rs.getString("schoolPhone"),rs.getDate("schoolHoliday"));
+
+
                 schools.add(school);
             }
             return schools;
