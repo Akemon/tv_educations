@@ -205,11 +205,11 @@ public class teacherDao {
     }
 
 
-public static void main(String[] args){
-    teacherDao rd=new teacherDao();
-   // System.out.print(rd.countTeacher());
-    System.out.print(rd.countNumberProvice());
-}
+//public static void main(String[] args){
+//    teacherDao rd=new teacherDao();
+//   // System.out.print(rd.countTeacher());
+//    System.out.print(rd.countNumberProvice());
+//}
 
 
 }

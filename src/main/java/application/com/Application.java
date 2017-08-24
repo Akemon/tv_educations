@@ -142,10 +142,17 @@ public class Application {
     public void searchPoem(HttpServletRequest request,HttpServletResponse response){
         String callback=request.getParameter("callback");
         String title =request.getParameter("keyword");
-        List<Poetry> poemList =poetryDao.getResearchPoem(title);
+        String pageNumString =request.getParameter("pageNum");
+        int pageNum =0;
+        if(pageNumString!=null){
+            pageNum =Integer.parseInt(pageNumString);
+        }
+        List<Poetry> poemList =poetryDao.getResearchPoem(title,pageNum);
+        int totalNumber =poetryDao.getAllpoemNumber(title);
         JSONArray jsonArray =JSONArray.fromObject(poemList);
         JSONObject jsonObject =new JSONObject();
         jsonObject.put("poemList", jsonArray);
+        jsonObject.put("allNumber",totalNumber);
         System.out.println(jsonObject.toString());
         response.setContentType("application/json; charset=utf-8");
         PrintWriter out = null;
@@ -199,10 +206,23 @@ public class Application {
     @RequestMapping("/getSevenDayAverageScore")
     public void getSevenDayAverageScore(HttpServletRequest request,HttpServletResponse response){
         String callback=request.getParameter("callback");
-        List<Record> recordList =poetryDao.getSevenDayData();
+        String studentIDString =request.getParameter("studentID");
+        System.out.println("studentIDStrng:"+studentIDString);
+        int studentID=0;
+        if(studentIDString!=null){
+            studentID =Integer.parseInt(studentIDString);
+        }
+        int dayReadNum =poetryDao.countTime(studentID);
+        int allReadNum =poetryDao.countAllTime(studentID);
+        String overPercent =poetryDao.getOverPeoplePercent(studentID);
+        System.out.println("overPercent:"+overPercent);
+        List<Record> recordList =poetryDao.getSevenDayData(studentID);
         JSONArray jsonArray =JSONArray.fromObject(recordList);
         JSONObject jsonObject =new JSONObject();
         jsonObject.put("recordList", jsonArray);
+        jsonObject.put("dayReadNum" ,dayReadNum);
+        jsonObject.put("allReadnum",allReadNum);
+       jsonObject.put("overpercent",overPercent);
         System.out.println(jsonObject.toString());
         response.setContentType("application/json; charset=utf-8");
         PrintWriter out = null;
@@ -854,10 +874,13 @@ public class Application {
     @RequestMapping("/getAllUserByProvince")
     public void getAllUserByProvince(HttpServletRequest request,HttpServletResponse response){
         String callback=request.getParameter("callback");
-        List<NumberProvice> NumberList =new NumberProviceDao().countNumberProvince();
-        JSONArray jsonArray =JSONArray.fromObject(NumberList);
+        List<NumberProvice> sortNumberList =new NumberProviceDao().listNumberProvince();
+        List<NumberProvice> allNumberList =new NumberProviceDao().countNumberProvince();
+        JSONArray jsonArray1 =JSONArray.fromObject(sortNumberList);
+        JSONArray jsonArray2 =JSONArray.fromObject(allNumberList);
         JSONObject jsonObject =new JSONObject();
-        jsonObject.put("NumberList", jsonArray);
+        jsonObject.put("sortNumberList", sortNumberList);
+        jsonObject.put("allNumberList",allNumberList);
         System.out.println(jsonObject.toString());
         response.setContentType("application/json; charset=utf-8");
         PrintWriter out = null;

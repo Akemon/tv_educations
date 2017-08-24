@@ -63,13 +63,13 @@ public class NumberProviceDao {
     }
 
 
-    public static void main(String[] args) {
-        NumberProviceDao nb = new NumberProviceDao();
-        List<NumberProvice> list=nb.listNumberProvince();
-        for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i).getProvince()+":"+list.get(i).getPeopleNumber());
-        }
-
-
-    }
+//    public static void main(String[] args) {
+//        NumberProviceDao nb = new NumberProviceDao();
+//        List<NumberProvice> list=nb.listNumberProvince();
+//        for(int i=0;i<list.size();i++){
+//            System.out.println(list.get(i).getProvince()+":"+list.get(i).getPeopleNumber());
+//        }
+//
+//
+//    }
 }

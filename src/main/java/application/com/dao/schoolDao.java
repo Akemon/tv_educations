@@ -168,14 +168,14 @@ public class schoolDao {
 
    }
 
-   public static  void main(String[] args){
-       schoolDao sd=new schoolDao();
-      //  School s1=new School(2,"深圳高级实验中学","广东省","深圳市","中学","2434343");
-      //System.out.print(sd.getSchool().get(0).getSchoolHoliday());
-        //System.out.print(sd.insertSchool(s1));
-        //System.out.print(sd.modifyStudent(s1));
-       // System.out.print(sd.getSchool());
-       // System.out.print(sd.getSchoolForProvince("广东省 "));
-        //System.out.print(sd.countSchool());
-   }
+//   public static  void main(String[] args){
+//       schoolDao sd=new schoolDao();
+//      //  School s1=new School(2,"深圳高级实验中学","广东省","深圳市","中学","2434343");
+//      //System.out.print(sd.getSchool().get(0).getSchoolHoliday());
+//        //System.out.print(sd.insertSchool(s1));
+//        //System.out.print(sd.modifyStudent(s1));
+//       // System.out.print(sd.getSchool());
+//       // System.out.print(sd.getSchoolForProvince("广东省 "));
+//        //System.out.print(sd.countSchool());
+//   }
 }

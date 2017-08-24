@@ -7,6 +7,16 @@ public class Record {
 
     private Integer studentid;
 
+    private int alreadyReadNum;
+
+    public int getAlreadyReadNum() {
+        return alreadyReadNum;
+    }
+
+    public void setAlreadyReadNum(int alreadyReadNum) {
+        this.alreadyReadNum = alreadyReadNum;
+    }
+
     public Record() {
     }
 

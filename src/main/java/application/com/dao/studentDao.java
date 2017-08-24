@@ -253,22 +253,22 @@ public class studentDao {
 
 
 
-    public static void main(String[] args)   {
-      // studentDao sd=new studentDao();
-      // sd.studentLogin("fwz","123");
-      // sd.studentLogin("sat","123");
-
-
-       // System.out.print(sd.searchStudent("冯").get(0).getStudentname());
+//    public static void main(String[] args)   {
+//      // studentDao sd=new studentDao();
+//      // sd.studentLogin("fwz","123");
+//      // sd.studentLogin("sat","123");
 //
-       // Student s1=new Student( "11245533",  "柳而蛋",  "初一二班",  1,  "1224354434232","www","123" );
-      //  sd.insertStudent(s1);
-        //System.out.print(sd.countNumberProvice());
-        //System.out.print(sd.studentLogin("fwz","123").getSchoolname());
-        //sd.delStudent(2);
-        //System.out.print(sd.getStudent().get(1).getStudentname());
-
-       // System.out.print(sd.countStudent());
-   }
+//
+//       // System.out.print(sd.searchStudent("冯").get(0).getStudentname());
+////
+//       // Student s1=new Student( "11245533",  "柳而蛋",  "初一二班",  1,  "1224354434232","www","123" );
+//      //  sd.insertStudent(s1);
+//        //System.out.print(sd.countNumberProvice());
+//        //System.out.print(sd.studentLogin("fwz","123").getSchoolname());
+//        //sd.delStudent(2);
+//        //System.out.print(sd.getStudent().get(1).getStudentname());
+//
+//       // System.out.print(sd.countStudent());
+//   }
 
 }
