@@ -135,7 +135,7 @@ public class poetryDao {
         SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
         try {
             long todayTime =df.parse(df.format(date)).getTime();
-            long sevenDaysAgoTime =df.parse(df.format(new Date(date.getTime() -7 * 24 * 60 * 60 * 1000))).getTime();
+            long sevenDaysAgoTime =df.parse(df.format(new Date(date.getTime() -6 * 24 * 60 * 60 * 1000))).getTime();
             System.out.println("today:"+todayTime);
             System.out.println("sevenDaysAgo:"+sevenDaysAgoTime);
             Statement statement =connection.createStatement();
@@ -149,13 +149,15 @@ public class poetryDao {
                     Record record =new Record();
                     record.setScore(rs.getString("score"));
                     record.setScoretime(rs.getString(1));
-                //    System.out.println("存储进List的时间："+rs.getString(1));
+                    System.out.println("存储进List的时间："+rs.getString(1));
                     recordList.add(record);
                 }
 
             }
             //将七天的数据整合成日期和对应的平均分
             //每循環一次將對應的平均分求出
+            long sevenDaysAgo =df.parse(df.format(new Date(date.getTime() -6*24*60*60*1000))).getTime();
+            long currentTime =df.parse(df.format(new Date(date.getTime() -6*24*60*60*1000))).getTime();
             for(int i =1;i<=7;i++){
                 int averageScore=0;
                 Iterator<Record> iterator =recordList.iterator();
@@ -166,22 +168,23 @@ public class poetryDao {
                     Record record =iterator.next();
                     long recordTime =df.parse(record.getScoretime()).getTime();
                     //當天日期的時間
-                    if(recordTime==todayTime){
+                    if(recordTime==currentTime){
                        averageScore+=Integer.parseInt(record.getScore());
                        count++;
                     }
                 }
                 //求出平均分
+                if(count!=0)
                 averageScore=averageScore/count;
                 System.out.println("平均分："+averageScore);
                 Record newRecord =new Record();
                 newRecord.setScore(String.valueOf(averageScore));
-                Date newDate =new Date(todayTime);
+                Date newDate =new Date(currentTime);
                 newRecord.setScoretime(df.format(newDate));
                 averageList.add(newRecord);
-                long needToSubtract =i*24*60*60*1000;
-                //前一天的時間
-                todayTime =df.parse(df.format(new Date(date.getTime() -needToSubtract))).getTime();
+                long needToAdd =i*24*60*60*1000;
+                //后一天的時間
+                currentTime =df.parse(df.format(new Date(sevenDaysAgo +needToAdd))).getTime();
             }
         } catch (Exception e) {
             e.printStackTrace();
