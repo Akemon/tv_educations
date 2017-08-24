@@ -199,9 +199,48 @@ public class poetryDao {
         }
     }
 
-       public static void main(String args[]){
-        new poetryDao().getResearchPoem("忆");
+    public int countTime(int studentID){
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd ");//设置日期格式
+            System.out.println(df.format(new Date()));// new Date()为获取当前系统时
+            PreparedStatement preparedStatement = connection.prepareStatement("select  count(*) from tv_record WHERE studentID=? and scoreTime=?");
+            preparedStatement.setInt(1,studentID);
+            preparedStatement.setString(2, df.format(new Date()));
+            ResultSet rs = preparedStatement.executeQuery();
+            int sum=0;
+            if(rs.next()){
+                sum=rs.getInt(1);
+            }
+            return sum;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
+
+    public int countAllTime(int studentID){
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select  count(*) from tv_record WHERE studentID=?");
+            preparedStatement.setInt(1,studentID);
+            ResultSet rs = preparedStatement.executeQuery();
+            int sum=0;
+            if(rs.next()){
+                 sum=rs.getInt(1);
+            }
+            return sum;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+       public static void main(String args[]){
+        //new poetryDao().getResearchPoem("忆");
+           //System.out.println(new poetryDao().countAllTime(1));
+           //System.out.println(new poetryDao().countTime(1));
+
+
+       }
 
 
 
